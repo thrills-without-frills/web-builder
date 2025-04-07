@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaign Builder - Home</title>
+  
+  <!-- Base Styles -->
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --primary-hover: #0ea271;
+      --primary-light: rgba(16, 185, 129, 0.1);
+      --secondary-color: #6366f1;
+      --secondary-hover: #4f46e5;
+      --neutral-50: #f9fafb;
+      --neutral-100: #f3f4f6;
+      --neutral-200: #e5e7eb;
+      --neutral-300: #d1d5db;
+      --neutral-400: #9ca3af;
+      --neutral-500: #6b7280;
+      --neutral-600: #4b5563;
+      --neutral-700: #374151;
+      --neutral-800: #1f2937;
+      --neutral-900: #111827;
+      --danger: #ef4444;
+      --danger-hover: #dc2626;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+      --border-radius: 0.375rem;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+    body {
+      background-color: var(--neutral-50);
+      color: var(--neutral-800);
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--border-radius);
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+    
+    .btn-secondary {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: var(--secondary-hover);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--neutral-300);
+      color: var(--neutral-700);
+    }
+    
+    .btn-outline:hover {
+      background-color: var(--neutral-100);
+      border-color: var(--neutral-400);
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background-color: var(--danger-hover);
+    }
+    
+    .btn-sm {
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+    }
+    
+    .btn-lg {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .btn-icon {
+      padding: 0.5rem;
+    }
+    
+    .icon {
+      width: 1rem;
+      height: 1rem;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    
+    .icon-sm {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+    
+    .icon-lg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+    
+    .card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--neutral-200);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+    }
+    
+    .card-content {
+      padding: 1.25rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--neutral-100);
+      background-color: var(--neutral-50);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px dashed var(--neutral-300);
+    }
+    
+    .empty-state-icon {
+      width: 4rem;
+      height: 4rem;
+      margin: 0 auto 1.5rem;
+      color: var(--neutral-400);
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--neutral-300);
+      border-radius: var(--border-radius);
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+    
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--neutral-700);
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .search-input {
+      position: relative;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--neutral-400);
+      pointer-events: none;
+    }
+    
+    .search-input input {
+      padding-left: 2.5rem;
+    }
+    
+    /* Utility Classes */
+    
+    .flex {
+      display: flex;
+    }
+    
+    .flex-col {
+      flex-direction: column;
+    }
+    
+    .items-center {
+      align-items: center;
+    }
+    
+    .items-start {
+      align-items: flex-start;
+    }
+    
+    .items-end {
+      align-items: flex-end;
+    }
+    
+    .justify-center {
+      justify-content: center;
+    }
+    
+    .justify-between {
+      justify-content: space-between;
+    }
+    
+    .justify-end {
+      justify-content: flex-end;
+    }
+    
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+    
+    .flex-1 {
+      flex: 1;
+    }
+    
+    .flex-grow {
+      flex-grow: 1;
+    }
+    
+    .gap-1 {
+      gap: 0.25rem;
+    }
+    
+    .gap-2 {
+      gap: 0.5rem;
+    }
+    
+    .gap-3 {
+      gap: 0.75rem;
+    }
+    
+    .gap-4 {
+      gap: 1rem;
+    }
+    
+    .gap-6 {
+      gap: 1.5rem;
+    }
+    
+    .gap-8 {
+      gap: 2rem;
+    }
+    
+    .mt-1 {
+      margin-top: 0.25rem;
+    }
+    
+    .mt-2 {
+      margin-top: 0.5rem;
+    }
+    
+    .mt-3 {
+      margin-top: 0.75rem;
+    }
+    
+    .mt-4 {
+      margin-top: 1rem;
+    }
+    
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+    
+    .mt-8 {
+      margin-top: 2rem;
+    }
+    
+    .mt-12 {
+      margin-top: 3rem;
+    }
+    
+    .mb-1 {
+      margin-bottom: 0.25rem;
+    }
+    
+    .mb-2 {
+      margin-bottom: 0.5rem;
+    }
+    
+    .mb-3 {
+      margin-bottom: 0.75rem;
+    }
+    
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+    
+    .mb-6 {
+      margin-bottom: 1.5rem;
+    }
+    
+    .mb-8 {
+      margin-bottom: 2rem;
+    }
+    
+    .mb-12 {
+      margin-bottom: 3rem;
+    }
+    
+    .mr-2 {
+      margin-right: 0.5rem;
+    }
+    
+    .ml-2 {
+      margin-left: 0.5rem;
+    }
+    
+    .p-2 {
+      padding: 0.5rem;
+    }
+    
+    .p-4 {
+      padding: 1rem;
+    }
+    
+    .p-6 {
+      padding: 1.5rem;
+    }
+    
+    .p-8 {
+      padding: 2rem;
+    }
+    
+    .py-2 {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    
+    .py-4 {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    
+    .py-6 {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+    
+    .py-8 {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    
+    .px-2 {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+    
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .px-6 {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    
+    .w-full {
+      width: 100%;
+    }
+    
+    .h-full {
+      height: 100%;
+    }
+    
+    .rounded {
+      border-radius: var(--border-radius);
+    }
+    
+    .rounded-full {
+      border-radius: 9999px;
+    }
+    
+    .border {
+      border: 1px solid var(--neutral-200);
+    }
+    
+    .border-t {
+      border-top: 1px solid var(--neutral-200);
+    }
+    
+    .border-b {
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    
+    .border-dashed {
+      border-style: dashed;
+    }
+    
+    .text-xs {
+      font-size: 0.75rem;
+    }
+    
+    .text-sm {
+      font-size: 0.875rem;
+    }
+    
+    .text-base {
+      font-size: 1rem;
+    }
+    
+    .text-lg {
+      font-size: 1.125rem;
+    }
+    
+    .text-xl {
+      font-size: 1.25rem;
+    }
+    
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+    
+    .text-3xl {
+      font-size: 1.875rem;
+    }
+    
+    .font-medium {
+      font-weight: 500;
+    }
+    
+    .font-semibold {
+      font-weight: 600;
+    }
+    
+    .font-bold {
+      font-weight: 700;
+    }
+    
+    .text-primary {
+      color: var(--primary-color);
+    }
+    
+    .text-secondary {
+      color: var(--secondary-color);
+    }
+    
+    .text-white {
+      color: white;
+    }
+    
+    .text-neutral-400 {
+      color: var(--neutral-400);
+    }
+    
+    .text-neutral-500 {
+      color: var(--neutral-500);
+    }
+    
+    .text-neutral-600 {
+      color: var(--neutral-600);
+    }
+    
+    .text-neutral-700 {
+      color: var(--neutral-700);
+    }
+    
+    .text-neutral-800 {
+      color: var(--neutral-800);
+    }
+    
+    .text-danger {
+      color: var(--danger);
+    }
+    
+    .text-success {
+      color: var(--success);
+    }
+    
+    .text-warning {
+      color: var(--warning);
+    }
+    
+    .text-info {
+      color: var(--info);
+    }
+    
+    .bg-white {
+      background-color: white;
+    }
+    
+    .bg-primary {
+      background-color: var(--primary-color);
+    }
+    
+    .bg-primary-light {
+      background-color: var(--primary-light);
+    }
+    
+    .bg-neutral-50 {
+      background-color: var(--neutral-50);
+    }
+    
+    .bg-neutral-100 {
+      background-color: var(--neutral-100);
+    }
+    
+    .bg-neutral-200 {
+      background-color: var(--neutral-200);
+    }
+    
+    .truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .shadow-sm {
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    
+    .shadow {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+    
+    .shadow-md {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .relative {
+      position: relative;
+    }
+    
+    .absolute {
+      position: absolute;
+    }
+    
+    .top-0 {
+      top: 0;
+    }
+    
+    .right-0 {
+      right: 0;
+    }
+    
+    .bottom-0 {
+      bottom: 0;
+    }
+    
+    .left-0 {
+      left: 0;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    .grid {
+      display: grid;
+    }
+    
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    
+    .cursor-pointer {
+      cursor: pointer;
+    }
+    
+    .transition {
+      transition: all 0.2s ease;
+    }
+    
+    .hover-shadow:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    /* Responsive Utilities */
+    
+    @media (min-width: 640px) {
+      .sm\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      
+      .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      
+      .lg\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+  </style>
+  
+  <!-- Home Page Specific Styles -->
+  <style>
+    /* Header styles */
+    .app-header {
+      background-color: white;
+      border-bottom: 1px solid var(--neutral-200);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    
+    .app-header .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+    
+    /* Main content styles */
+    .main-content {
+      padding: 2.5rem 0;
+    }
+    
+    /* Project card styles */
+    .project-thumbnail {
+      height: 180px;
+      background-color: var(--neutral-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .template-thumbnail {
+      height: 160px;
+      background-color: var(--neutral-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .project-card-actions {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      display: flex;
+      gap: 0.25rem;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    
+    .project-card:hover .project-card-actions {
+      opacity: 1;
+    }
+    
+    .action-button {
+      background-color: white;
+      border: none;
+      border-radius: 9999px;
+      padding: 0.375rem;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .action-button:hover {
+      background-color: var(--neutral-100);
+    }
+    
+    .action-button.delete:hover {
+      background-color: var(--danger);
+      color: white;
+    }
+    
+    /* Template card styles */
+    .template-badge {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.625rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    
+    /* Create project card */
+    .create-project-card {
+      background-color: white;
+      border: 2px dashed var(--neutral-300);
+      border-radius: var(--border-radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.2s ease;
+      height: 100%;
+      min-height: 300px;
+    }
+    
+    .create-project-card:hover {
+      border-color: var(--primary-color);
+      background-color: var(--primary-light);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .create-project-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1.25rem;
+    }
+    
+    /* Filters */
+    .filters-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .view-toggle {
+      display: flex;
+      border: 1px solid var(--neutral-300);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+    
+    .view-toggle-btn {
+      padding: 0.375rem 0.75rem;
+      background-color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .view-toggle-btn.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    /* Empty state */
+    .empty-projects {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 2px dashed var(--neutral-300);
+      margin-bottom: 2.5rem;
+    }
+    
+    .empty-icon {
+      width: 5rem;
+      height: 5rem;
+      margin: 0 auto 1.5rem;
+      color: var(--neutral-400);
+    }
+    
+    /* Create New Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background-color: white;
+      border-radius: var(--border-radius);
+      max-width: 32rem;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .modal-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--neutral-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-body {
+      padding: 1.5rem;
+    }
+    
+    .modal-footer {
+      padding: 1.25rem;
+      border-top: 1px solid var(--neutral-200);
+      background-color: var(--neutral-50);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+    
+    /* Tooltip */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 120px;
+      background-color: var(--neutral-800);
+      color: white;
+      text-align: center;
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 0.75rem;
+      pointer-events: none;
+    }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    /* Tour dot */
+    .tour-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      top: -2px;
+      right: -2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main App Header -->
+  <header class="app-header">
+    <div class="container">
+      <div class="flex justify-between items-center">
+        <a href="/" class="logo tour-logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+            <polyline points="17 2 12 7 7 2"></polyline>
+          </svg>
+          Campaign Builder
+        </a>
+        
+        <div class="flex gap-3">
+          <button class="btn btn-outline btn-sm" id="import-btn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Import
+          </button>
+          
+          <button class="btn btn-primary btn-sm tour-new-project" id="new-project-btn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            New Project
+          </button>
+          
+          <button class="btn btn-outline btn-icon tooltip" id="help-btn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <div class="tour-dot"></div>
+            <span class="tooltip-text">Start Tour</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Projects Section -->
+      <section class="mb-12 tour-projects-section">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-semibold text-neutral-800">My Projects</h2>
+          
+          <div class="flex gap-2">
+            <div class="search-input">
+              <svg class="icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" placeholder="Search projects..." id="search-projects" class="w-60">
+            </div>
+            
+            <div class="view-toggle">
+              <button class="view-toggle-btn active" data-view="grid" title="Grid View">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </button>
+              <button class="view-toggle-btn" data-view="list" title="List View">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            
+            <button class="btn btn-outline btn-icon" title="Sort Projects">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="7 11 12 6 17 11"></polyline>
+                <polyline points="7 17 12 12 17 17"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Empty Projects State -->
+        <div class="empty-projects" id="empty-projects">
+          <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <h3 class="text-xl font-medium text-neutral-700 mb-2">No Projects Found</h3>
+          <p class="text-neutral-500 mb-6 max-w-md mx-auto">
+            You haven't created any campaigns yet. Start creating your first project or use one of our templates to get started quickly.
+          </p>
+          <button class="btn btn-primary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Create New Project
+          </button>
+        </div>
+        
+        <!-- Projects Grid (shown when there are projects) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid" style="display: none;">
+          <!-- New Project Card -->
+          <div class="create-project-card cursor-pointer" id="create-project-card">
+            <svg class="create-project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="16"></line>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+            <h3 class="text-lg font-medium text-neutral-800 mb-2">Create New Project</h3>
+            <p class="text-neutral-500 mb-4">Start from scratch or use a template</p>
+            <button class="btn btn-primary">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              New Project
+            </button>
+          </div>
+          
+          <!-- Sample Project Cards - would be generated dynamically -->
+          <div class="card project-card">
+            <div class="project-thumbnail">
+              <img src="https://via.placeholder.com/400x180/f3f4f6/9ca3af?text=Travel+Campaign" alt="Travel Campaign" class="w-full h-full object-cover">
+              <div class="project-card-actions">
+                <button class="action-button tooltip">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  <span class="tooltip-text">Rename</span>
+                </button>
+                <button class="action-button tooltip">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span class="tooltip-text">Duplicate</span>
+                </button>
+                <button class="action-button tooltip delete">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                  <span class="tooltip-text">Delete</span>
+                </button>
+              </div>
+            </div>
+            <div class="card-content">
+              <h3 class="font-medium text-lg mb-1">Travel Campaign</h3>
+              <p class="text-sm text-neutral-500 line-clamp-2">Summer vacation promotion with special discounts for early bookings.</p>
+              <p class="text-xs text-neutral-400 mt-3">Last updated: April 5, 2025</p>
+            </div>
+            <div class="card-footer">
+              <a href="editor.html?id=1" class="btn btn-primary w-full">
+                Edit Campaign
+              </a>
+            </div>
+          </div>
+          
+          <div class="card project-card">
+            <div class="project-thumbnail">
+              <img src="https://via.placeholder.com/400x180/f3f4f6/9ca3af?text=Product+Launch" alt="Product Launch" class="w-full h-full object-cover">
+              <div class="project-card-actions">
+                <button class="action-button tooltip">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  <span class="tooltip-text">Rename</span>
+                </button>
+                <button class="action-button tooltip">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span class="tooltip-text">Duplicate</span>
+                </button>
+                <button class="action-button tooltip delete">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                  <span class="tooltip-text">Delete</span>
+                </button>
+              </div>
+            </div>
+            <div class="card-content">
+              <h3 class="font-medium text-lg mb-1">Product Launch</h3>
+              <p class="text-sm text-neutral-500 line-clamp-2">New product announcement with feature highlights and limited time offers.</p>
+              <p class="text-xs text-neutral-400 mt-3">Last updated: April 3, 2025</p>
+            </div>
+            <div class="card-footer">
+              <a href="editor.html?id=2" class="btn btn-primary w-full">
+                Edit Campaign
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Templates Section -->
+      <section class="mb-12 tour-templates-section">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-semibold text-neutral-800">Templates</h2>
+          
+          <div class="flex gap-2">
+            <div class="search-input">
+              <svg class="icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" placeholder="Search templates..." id="search-templates" class="w-60">
+            </div>
+            
+            <select class="w-40" id="template-category">
+              <option value="">All Categories</option>
+              <option value="travel">Travel</option>
+              <option value="retail">Retail</option>
+              <option value="events">Events</option>
+              <option value="marketing">Marketing</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Templates Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div class="card">
+            <div class="template-thumbnail">
+              <img src="https://via.placeholder.com/400x160/f3f4f6/9ca3af?text=Google+Flights" alt="Google Flights Style" class="w-full h-full object-cover">
+              <div class="template-badge">Travel</div>
+            </div>
+            <div class="card-content">
+              <h3 class="font-medium mb-1">Google Flights Style</h3>
+              <p class="text-xs text-neutral-500">Travel booking experience with clean interface</p>
+            </div>
+            <div class="card-footer">
+              <a href="editor.html?template=1" class="btn btn-outline w-full">Use Template</a>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="template-thumbnail">
+              <img src="https://via.placeholder.com/400x160/f3f4f6/9ca3af?text=Product+Showcase" alt="Product Showcase" class="w-full h-full object-cover">
+              <div class="template-badge">Retail</div>
+            </div>
+            <div class="card-content">
+              <h3 class="font-medium mb-1">Product Showcase</h3>
+              <p class="text-xs text-neutral-500">Feature products with detailed specifications</p>
+            </div>
+            <div class="card-footer">
+              <a href="editor.html?template=2" class="btn btn-outline w-full">Use Template</a>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="template-thumbnail">
+              <img src="https://via.placeholder.com/400x160/f3f4f6/9ca3af?text=Newsletter" alt="Newsletter" class="w-full h-full object-cover">
+              <div class="template-badge">Marketing</div>
+            </div>
+            <div class="card-content">
+              <h3 class="font-medium mb-1">Newsletter</h3>
+              <p class="text-xs text-neutral-500">Email-friendly newsletter layout with content blocks</p>
+            </div>
+            <div class="card-footer">
+              <a href="editor.html?template=3" class="btn btn-outline w-full">Use Template</a>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="template-thumbnail">
+              <img src="https://via.placeholder.com/400x160/f3f4f6/9ca3af?text=Event+Invitation" alt="Event Invitation" class="w-full h-full object-cover">
+              <div class="template-badge">Events</div>
+            </div>
+            <div class="card-content">
+              <h3 class="font-medium mb-1">Event Invitation</h3>
+              <p class="text-xs text-neutral-500">Formal invitation with RSVP function</p>
+            </div>
+            <div class="card-footer">
+              <a href="editor.html?template=4" class="btn btn-outline w-full">Use Template</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Recent Activities Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-neutral-800 mb-6">Recent Activity</h2>
+        
+        <div class="card">
+          <div class="p-6">
+            <!-- Empty Activity State -->
+            <div class="text-center py-8">
+              <svg class="w-16 h-16 mx-auto mb-4 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              <h3 class="text-lg font-medium text-neutral-700 mb-2">No Recent Activity</h3>
+              <p class="text-neutral-500 max-w-md mx-auto">
+                Your recent activities will appear here once you start creating and editing projects.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-white border-t border-neutral-200 py-6">
+    <div class="container">
+      <div class="flex justify-between items-center">
+        <div class="text-sm text-neutral-500">
+          © 2025 Campaign Builder. All rights reserved.
+        </div>
+        <div class="flex gap-4">
+          <a href="#" class="text-sm text-neutral-500 hover:text-primary">Help</a>
+          <a href="#" class="text-sm text-neutral-500 hover:text-primary">Privacy</a>
+          <a href="#" class="text-sm text-neutral-500 hover:text-primary">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Create Project Modal -->
+  <div class="modal-overlay hidden" id="create-project-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="text-xl font-semibold">Create New Project</h3>
+        <button class="btn btn-icon" id="close-modal-btn">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="create-project-form">
+          <div class="form-group">
+            <label for="project-name">Project Name</label>
+            <input type="text" id="project-name" name="projectName" placeholder="Enter project name..." required>
+          </div>
+          <div class="form-group">
+            <label for="project-description">Description (optional)</label>
+            <textarea id="project-description" name="projectDescription" rows="3" placeholder="Briefly describe your project..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Start with</label>
+            <div class="flex gap-4 mt-2">
+              <div class="flex items-center">
+                <input type="radio" id="blank-project" name="projectType" value="blank" checked>
+                <label for="blank-project" class="ml-2 font-normal">Blank Project</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="use-template" name="projectType" value="template">
+                <label for="use-template" class="ml-2 font-normal">Template</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group hidden" id="template-selection">
+            <label for="template-select">Choose Template</label>
+            <select id="template-select" name="templateId">
+              <option value="">-- Select Template --</option>
+              <option value="1">Google Flights Style</option>
+              <option value="2">Product Showcase</option>
+              <option value="3">Newsletter</option>
+              <option value="4">Event Invitation</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="create-btn">Create Project</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Tour Guide Tooltip (initially hidden) -->
+  <div class="absolute p-2 bg-white rounded shadow-lg hidden" id="tour-tooltip" style="z-index: 1000;">
+    <div class="relative p-3">
+      <div id="tour-content">Welcome to the Campaign Builder!</div>
+      <div class="flex justify-between mt-4">
+        <button class="btn btn-outline btn-sm" id="tour-skip">Skip Tour</button>
+        <button class="btn btn-primary btn-sm" id="tour-next">Next</button>
+      </div>
+      <button class="absolute top-1 right-1 p-1" id="tour-close">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript for interactions -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // DOM Elements
+      const createProjectModal = document.getElementById('create-project-modal');
+      const newProjectBtn = document.getElementById('new-project-btn');
+      const createProjectCard = document.getElementById('create-project-card');
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      const cancelBtn = document.getElementById('cancel-btn');
+      const createBtn = document.getElementById('create-btn');
+      const projectTypeRadios = document.getElementsByName('projectType');
+      const templateSelection = document.getElementById('template-selection');
+      const emptyProjects = document.getElementById('empty-projects');
+      const projectsGrid = document.getElementById('projects-grid');
+      const viewToggleBtns = document.querySelectorAll('.view-toggle-btn');
+      const helpBtn = document.getElementById('help-btn');
+      const tourTooltip = document.getElementById('tour-tooltip');
+      
+      // Variables
+      let currentView = 'grid';
+      let hasProjects = false; // Set to true if there are projects
+      let tourStep = 0;
+      let tourActive = false;
+      
+      // Toggle project view (empty state vs projects grid)
+      function toggleProjectsView() {
+        if (hasProjects) {
+          emptyProjects.style.display = 'none';
+          projectsGrid.style.display = 'grid';
+        } else {
+          emptyProjects.style.display = 'block';
+          projectsGrid.style.display = 'none';
+        }
+      }
+      
+      // Initialize the page
+      function init() {
+        toggleProjectsView();
+      }
+      
+      // Show Create Project Modal
+      function showCreateProjectModal() {
+        createProjectModal.classList.remove('hidden');
+      }
+      
+      // Hide Create Project Modal
+      function hideCreateProjectModal() {
+        createProjectModal.classList.add('hidden');
+        document.getElementById('create-project-form').reset();
+      }
+      
+      // Toggle Template Selection based on radio choice
+      function toggleTemplateSelection() {
+        const useTemplate = document.getElementById('use-template').checked;
+        if (useTemplate) {
+          templateSelection.classList.remove('hidden');
+        } else {
+          templateSelection.classList.add('hidden');
+        }
+      }
+      
+      // Toggle view (grid/list)
+      function setView(view) {
+        currentView = view;
+        viewToggleBtns.forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.dataset.view === view) {
+            btn.classList.add('active');
+          }
+        });
+        
+        // Here you would update the project display style (grid/list)
+      }
+      
+      // Event Listeners
+      newProjectBtn.addEventListener('click', showCreateProjectModal);
+      createProjectCard.addEventListener('click', showCreateProjectModal);
+      closeModalBtn.addEventListener('click', hideCreateProjectModal);
+      cancelBtn.addEventListener('click', hideCreateProjectModal);
+      
+      // Close modal on backdrop click
+      createProjectModal.addEventListener('click', function(e) {
+        if (e.target === createProjectModal) {
+          hideCreateProjectModal();
+        }
+      });
+      
+      // Toggle template selection when radio changes
+      projectTypeRadios.forEach(radio => {
+        radio.addEventListener('change', toggleTemplateSelection);
+      });
+      
+      // Create project button handler
+      createBtn.addEventListener('click', function() {
+        // Here you would handle project creation
+        alert('Creating new project...');
+        hideCreateProjectModal();
+      });
+      
+      // View toggle handlers
+      viewToggleBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          setView(this.dataset.view);
+        });
+      });
+      
+      // Help/Tour button
+      helpBtn.addEventListener('click', function() {
+        startTour();
+      });
+      
+      // Start the tour
+      function startTour() {
+        tourActive = true;
+        tourStep = 0;
+        showTourStep();
+      }
+      
+      // Show current tour step
+      function showTourStep() {
+        // Define the tour steps
+        const tourSteps = [
+          {
+            element: '.tour-logo',
+            title: 'Welcome to Campaign Builder!',
+            content: 'This tool will help you create beautiful HTML campaigns with ease.'
+          },
+          {
+            element: '.tour-new-project',
+            title: 'Create Projects',
+            content: 'Start a new campaign project from scratch or using a template.'
+          },
+          {
+            element: '.tour-projects-section',
+            title: 'Manage Your Projects',
+            content: 'All your campaign projects will appear here for easy access.'
+          },
+          {
+            element: '.tour-templates-section',
+            title: 'Templates Gallery',
+            content: 'Browse and use pre-designed templates to speed up your workflow.'
+          }
+        ];
+        
+        if (tourStep >= tourSteps.length) {
+          // End of tour
+          tourActive = false;
+          tourTooltip.classList.add('hidden');
+          return;
+        }
+        
+        const step = tourSteps[tourStep];
+        const targetElement = document.querySelector(step.element);
+        
+        if (targetElement) {
+          const rect = targetElement.getBoundingClientRect();
+          const tooltipWidth = 300;
+          
+          // Position the tooltip
+          let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+          let top = rect.bottom + 10;
+          
+          // Adjust if the tooltip would go outside the viewport
+          if (left < 10) left = 10;
+          if (left + tooltipWidth > window.innerWidth - 10) {
+            left = window.innerWidth - tooltipWidth - 10;
+          }
+          
+          // If the tooltip would go below the viewport, position it above the element
+          if (top + 150 > window.innerHeight) {
+            top = rect.top - 150 - 10;
+          }
+          
+          tourTooltip.style.left = left + 'px';
+          tourTooltip.style.top = top + 'px';
+          tourTooltip.style.width = tooltipWidth + 'px';
+          
+          // Update the tooltip content
+          document.getElementById('tour-content').innerHTML = `
+            <h4 class="text-lg font-medium mb-2">${step.title}</h4>
+            <p class="text-neutral-600">${step.content}</p>
+          `;
+          
+          // Show/hide next/back buttons
+          document.getElementById('tour-next').textContent = tourStep === tourSteps.length - 1 ? 'Finish' : 'Next';
+          
+          // Show the tooltip
+          tourTooltip.classList.remove('hidden');
+        }
+      }
+      
+      // Tour navigation
+      document.getElementById('tour-next').addEventListener('click', function() {
+        tourStep++;
+        showTourStep();
+      });
+      
+      document.getElementById('tour-skip').addEventListener('click', function() {
+        tourActive = false;
+        tourTooltip.classList.add('hidden');
+      });
+      
+      document.getElementById('tour-close').addEventListener('click', function() {
+        tourActive = false;
+        tourTooltip.classList.add('hidden');
+      });
+      
+      // Toggle projects state (for demo purposes)
+      document.getElementById('empty-projects').addEventListener('click', function(e) {
+        if (e.target.tagName === 'BUTTON') {
+          hasProjects = true;
+          toggleProjectsView();
+        }
+      });
+      
+      // Initialize
+      init();
+    });
+  </script>
+</body>
+</html>

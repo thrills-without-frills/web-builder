@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Builder - Editor</title>
+
+    <!-- GrapesJS Core CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+
+    <!-- GrapesJS Preset Webpage CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css">
+
+    <!-- Base Styles -->
+    <style>
+        :root {
+            --primary-color: #10b981;
+            --primary-hover: #0ea271;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --danger: #ef4444;
+            --border-radius: 0.375rem;
+        }
+
+        .panel-content {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: var(--neutral-50);
+            color: var(--neutral-800);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--neutral-300);
+            color: var(--neutral-700);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--neutral-100);
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .icon-solo {
+            margin-right: 0;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .flex-grow {
+            flex-grow: 1;
+        }
+
+        .flex-1 {
+            flex: 1;
+        }
+
+        .space-x-2>*+* {
+            margin-left: 0.5rem;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .text-xs {
+            font-size: 0.75rem;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .border {
+            border: 1px solid var(--neutral-200);
+        }
+
+        .border-t {
+            border-top: 1px solid var(--neutral-200);
+        }
+
+        .border-b {
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .border-l {
+            border-left: 1px solid var(--neutral-200);
+        }
+
+        .border-r {
+            border-right: 1px solid var(--neutral-200);
+        }
+
+        .rounded {
+            border-radius: var(--border-radius);
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+
+        .bg-primary {
+            background-color: var(--primary-color);
+        }
+
+        .text-neutral-400 {
+            color: var(--neutral-400);
+        }
+
+        .text-neutral-500 {
+            color: var(--neutral-500);
+        }
+
+        .text-primary {
+            color: var(--primary-color);
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .p-4 {
+            padding: 1rem;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .px-3 {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .right-2 {
+            right: 0.5rem;
+        }
+
+        .top-2 {
+            top: 0.5rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Loader styles */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loader {
+            border: 4px solid var(--neutral-200);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <!-- Editor Specific Styles -->
+    <style>
+        /* Editor Layout */
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .editor-header {
+            background-color: white;
+            border-bottom: 1px solid var(--neutral-200);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .editor-toolbar {
+            background-color: white;
+            border-bottom: 1px solid var(--neutral-200);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            z-index: 9;
+        }
+
+        .editor-main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .left-panel {
+            width: 250px;
+            background-color: white;
+            border-right: 1px solid var(--neutral-200);
+            display: flex;
+            flex-direction: column;
+            z-index: 8;
+        }
+
+        .right-panel {
+            width: 280px;
+            background-color: white;
+            border-left: 1px solid var(--neutral-200);
+            display: flex;
+            flex-direction: column;
+            z-index: 8;
+        }
+
+        .canvas-area {
+            flex: 1;
+            background-color: var(--neutral-100);
+            position: relative;
+            overflow: auto;
+        }
+
+        /* Customized GrapesJS styles */
+        #gjs {
+            height: 100%;
+            border: none;
+        }
+
+        /* Hide GrapesJS default panels */
+        .gjs-pn-commands,
+        .gjs-pn-devices-c,
+        .gjs-pn-options,
+        .gjs-pn-panel.gjs-pn-views-container,
+        .gjs-pn-panel.gjs-pn-views {
+            display: none;
+        }
+
+        /* Custom panel tab styles */
+        .tab-list {
+            display: flex;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .tab {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--neutral-500);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            flex: 1;
+            text-align: center;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow: auto;
+            padding: 1rem;
+        }
+
+        /* Custom component list */
+        .components-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .component-item {
+            padding: 0.5rem;
+            background-color: var(--neutral-100);
+            border-radius: 0.25rem;
+            text-align: center;
+            font-size: 0.75rem;
+            cursor: move;
+            transition: background-color 0.2s;
+        }
+
+        .component-item:hover {
+            background-color: var(--neutral-200);
+        }
+
+        /* Device switcher */
+        .device-button-group {
+            display: inline-flex;
+            border: 1px solid var(--neutral-300);
+            border-radius: 0.25rem;
+        }
+
+        .device-button {
+            padding: 0.375rem 0.75rem;
+            background-color: white;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .device-button:not(:last-child) {
+            border-right: 1px solid var(--neutral-300);
+        }
+
+        .device-button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Status bar */
+        .editor-footer {
+            background-color: white;
+            border-top: 1px solid var(--neutral-200);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--neutral-500);
+            z-index: 10;
+        }
+
+        /* Code panel */
+        .code-panel {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 1000px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .code-tabs {
+            display: flex;
+        }
+
+        .code-tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .code-tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .code-content {
+            padding: 1rem;
+            max-height: 400px;
+            overflow: auto;
+        }
+
+        .code-area {
+            padding: 1rem;
+            background-color: var(--neutral-100);
+            border-radius: 0.25rem;
+            font-family: monospace;
+            white-space: pre;
+            overflow: auto;
+            min-height: 200px;
+        }
+
+        /* Template modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: auto;
+        }
+
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--neutral-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 1rem;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .template-card {
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .template-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .template-thumbnail {
+            height: 160px;
+            background-color: var(--neutral-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .template-info {
+            padding: 1rem;
+        }
+
+        .template-footer {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--neutral-100);
+        }
+
+        /* Tour indicator dot */
+        .tour-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            top: -4px;
+            right: -4px;
+        }
+
+        /* Context menu */
+        .context-menu {
+            position: absolute;
+            background-color: white;
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            min-width: 160px;
+            z-index: 1000;
+        }
+
+        .context-menu-item {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .context-menu-item:hover {
+            background-color: var(--neutral-100);
+        }
+
+        .context-menu-separator {
+            height: 1px;
+            background-color: var(--neutral-200);
+            margin: 0.25rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Indicator -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Main Editor Container -->
+    <div class="editor-container" id="editor-container">
+        <!-- Header with project info and main actions -->
+        <div class="editor-header">
+            <div class="flex items-center">
+                <div class="font-medium" id="project-name">New Campaign</div>
+            </div>
+            <div class="flex space-x-2">
+                <button class="btn btn-outline btn-sm" id="templates-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                    </svg>
+                    Templates
+                </button>
+                <button class="btn btn-outline btn-sm" id="export-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export
+                </button>
+                <button class="btn btn-primary btn-sm" id="save-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Save
+                </button>
+                <button class="btn btn-outline btn-sm" id="new-project-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    New Project
+                </button>
+                <button class="btn btn-outline btn-sm" id="back-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Home
+                </button>
+            </div>
+
+            <!-- Tour button -->
+            <div class="relative">
+                <button class="absolute right-2 top-2 btn btn-outline btn-icon" id="tour-btn" title="Start Tutorial">
+                    <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <div class="tour-dot"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Device switcher toolbar -->
+        <div class="editor-toolbar" id="editor-toolbar">
+            <div class="device-button-group">
+                <button class="device-button" data-device="mobile">
+                    <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                    </svg>
+                    Mobile
+                </button>
+                <button class="device-button" data-device="tablet">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" stroke="currentColor">
+                        <path d="M120-160q-33 0-56.5-23.5T40-240v-480q0-33 23.5-56.5T120-800h720q33 0 56.5 23.5T920-720v480q0 33-23.5 56.5T840-160H120Zm40-560h-40v480h40v-480Zm80 480h480v-480H240v480Zm560-480v480h40v-480h-40Zm0 0h40-40Zm-640 0h-40 40Z"/>
+                    </svg>
+                    Tablet
+                </button>
+                <button class="device-button active" data-device="desktop">
+                    <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    Desktop
+                </button>
+            </div>
+        </div>
+
+        <!-- Main editor area with panels -->
+        <div class="editor-main">
+            <!-- Left Panel - Components -->
+            <div class="left-panel" id="left-panel">
+                <div class="tab-list">
+                    <div class="tab active" data-tab="components">Components</div>
+                    <div class="tab" data-tab="assets">Assets</div>
+                    <div class="tab" data-tab="pages">Pages</div>
+                </div>
+
+                <!-- Components Tab Content -->
+                <div class="panel-content" id="components-tab">
+                    <h3 class="font-medium mb-2">Basic</h3>
+                    <div class="components-list">
+                        <div class="component-item" data-block-type="text">Text</div>
+                        <div class="component-item" data-block-type="heading">Heading</div>
+                        <div class="component-item" data-block-type="button">Button</div>
+                        <div class="component-item" data-block-type="image">Image</div>
+                        <div class="component-item" data-block-type="link">Link</div>
+                        <div class="component-item" data-block-type="video">Video</div>
+                    </div>
+
+                    <h3 class="font-medium mb-2 mt-4">Layout</h3>
+                    <div class="components-list">
+                        <div class="component-item" data-block-type="container">Container</div>
+                        <div class="component-item" data-block-type="row">Row</div>
+                        <div class="component-item" data-block-type="column">Column</div>
+                        <div class="component-item" data-block-type="section">Section</div>
+                        <div class="component-item" data-block-type="flexbox">Flexbox</div>
+                        <div class="component-item" data-block-type="grid">Grid</div>
+                    </div>
+
+                    <h3 class="font-medium mb-2 mt-4">Components</h3>
+                    <div class="components-list">
+                        <div class="component-item" data-block-type="card">Card</div>
+                        <div class="component-item" data-block-type="form">Form</div>
+                        <div class="component-item" data-block-type="table">Table</div>
+                        <div class="component-item" data-block-type="navbar">Navbar</div>
+                        <div class="component-item" data-block-type="footer">Footer</div>
+                        <div class="component-item" data-block-type="slider">Slider</div>
+                    </div>
+
+                    <h3 class="font-medium mb-2 mt-4">Templates</h3>
+                    <button class="btn btn-outline w-full" id="browse-templates-btn">
+                        Browse Templates
+                    </button>
+                </div>
+
+                <!-- Assets Tab Content -->
+                <div class="panel-content hidden" id="assets-tab">
+                    <div class="flex justify-between mb-4">
+                        <h3 class="font-medium">My Assets</h3>
+                        <button class="btn btn-outline btn-sm">
+                            <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Upload
+                        </button>
+                    </div>
+
+                    <div class="text-neutral-400 text-center p-4">
+                        No assets uploaded yet
+                    </div>
+                </div>
+
+                <!-- Pages Tab Content -->
+                <div class="panel-content hidden" id="pages-tab">
+                    <div class="flex justify-between mb-4">
+                        <h3 class="font-medium">Pages</h3>
+                        <button class="btn btn-outline btn-sm">
+                            <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add Page
+                        </button>
+                    </div>
+
+                    <div class="mb-2 border rounded p-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Home</span>
+                            <span class="text-xs bg-primary text-white px-2 py-1 rounded">Current</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Canvas -->
+            <div class="canvas-area" id="canvas-area">
+                <!-- GrapesJS editor will be initialized here -->
+                <div id="gjs"></div>
+            </div>
+
+            <!-- Right Panel - Properties -->
+            <div class="right-panel" id="right-panel">
+                <div class="tab-list">
+                    <div class="tab active" data-tab="properties">Properties</div>
+                    <div class="tab" data-tab="styles">Styles</div>
+                    <div class="tab" data-tab="layers">Layers</div>
+                </div>
+
+                <!-- Properties Tab Content -->
+                <div class="panel-content" id="properties-tab">
+                    <p class="text-neutral-400 text-center p-4">
+                        Select an element to edit its properties
+                    </p>
+                </div>
+
+                <!-- Styles Tab Content -->
+                <div class="panel-content hidden" id="styles-tab">
+                    <p class="text-neutral-400 text-center p-4">
+                        Select an element to edit its styles
+                    </p>
+                </div>
+
+                <!-- Layers Tab Content -->
+                <div class="panel-content hidden" id="layers-tab">
+                    <p class="text-neutral-400 text-center p-4">
+                        No layers available
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="editor-footer" id="editor-footer">
+            <div id="status-message">New Campaign · Last saved: Never</div>
+            <div class="flex items-center">
+                <button class="btn btn-outline btn-sm" id="toggle-code-btn">
+                    <svg class="icon icon-solo mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    View Code
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel (initially hidden) -->
+    <div class="code-panel hidden" id="code-panel">
+        <div class="code-header">
+            <div class="code-tabs">
+                <div class="code-tab active" data-code-tab="html">HTML</div>
+                <div class="code-tab" data-code-tab="css">CSS</div>
+                <div class="code-tab" data-code-tab="js">JS</div>
+            </div>
+            <button class="btn btn-outline btn-sm" id="close-code-btn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                Close
+            </button>
+        </div>
+        <div class="code-content">
+            <div class="code-area" id="code-html"></div>
+            <div class="code-area hidden" id="code-css"></div>
+            <div class="code-area hidden" id="code-js"></div>
+        </div>
+    </div>
+
+    <!-- Template Modal (initially hidden) -->
+    <div class="modal-overlay hidden" id="template-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="font-medium">Choose a Template</h3>
+                <button class="btn btn-outline btn-icon" id="close-template-modal">
+                    <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="template-grid">
+                    <div class="template-card" data-template-id="1">
+                        <div class="template-thumbnail">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="template-info">
+                            <h3 class="font-medium mb-1">Google Flights Style</h3>
+                            <p class="text-xs text-neutral-500">Travel</p>
+                        </div>
+                        <div class="template-footer">
+                            <button class="btn btn-outline btn-sm w-full">Use Template</button>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-template-id="2">
+                        <div class="template-thumbnail">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="template-info">
+                            <h3 class="font-medium mb-1">Product Showcase</h3>
+                            <p class="text-xs text-neutral-500">E-commerce</p>
+                        </div>
+                        <div class="template-footer">
+                            <button class="btn btn-outline btn-sm w-full">Use Template</button>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-template-id="3">
+                        <div class="template-thumbnail">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="template-info">
+                            <h3 class="font-medium mb-1">Newsletter</h3>
+                            <p class="text-xs text-neutral-500">Marketing</p>
+                        </div>
+                        <div class="template-footer">
+                            <button class="btn btn-outline btn-sm w-full">Use Template</button>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-template-id="4">
+                        <div class="template-thumbnail">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="template-info">
+                            <h3 class="font-medium mb-1">Event Invitation</h3>
+                            <p class="text-xs text-neutral-500">Events</p>
+                        </div>
+                        <div class="template-footer">
+                            <button class="btn btn-outline btn-sm w-full">Use Template</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Options Modal (initially hidden) -->
+    <div class="modal-overlay hidden" id="export-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="font-medium">Export Project</h3>
+                <button class="btn btn-outline btn-icon" id="close-export-modal">
+                    <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h4 class="font-medium mb-2">Export Format</h4>
+                    <div class="flex space-x-2">
+                        <button class="btn btn-outline active" data-export-format="zip">ZIP (All Files)</button>
+                        <button class="btn btn-outline" data-export-format="html">HTML Only</button>
+                        <button class="btn btn-outline" data-export-format="html-css">HTML & CSS</button>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="font-medium mb-2">Options</h4>
+                    <div class="flex flex-col space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" checked id="include-assets">
+                            <span class="ml-2">Include Assets</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" checked id="minify-code">
+                            <span class="ml-2">Minify Code</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="include-sourcemaps">
+                            <span class="ml-2">Include Source Maps</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary w-full" id="confirm-export-btn">
+                    Export Project
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu (initially hidden) -->
+    <div class="context-menu hidden" id="context-menu">
+        <div class="context-menu-item" data-action="copy">Copy</div>
+        <div class="context-menu-item" data-action="paste">Paste</div>
+        <div class="context-menu-item" data-action="delete">Delete</div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" data-action="duplicate">Duplicate</div>
+        <div class="context-menu-item" data-action="move-up">Move Up</div>
+        <div class="context-menu-item" data-action="move-down">Move Down</div>
+    </div>
+
+    <!-- Tour Guide Tooltip (initially hidden) -->
+    <div class="absolute p-2 bg-white rounded shadow-lg hidden" id="tour-tooltip" style="z-index: 2000;">
+        <div class="relative p-3">
+            <div id="tour-content">Welcome to the Campaign Builder!</div>
+            <div class="flex justify-between mt-2">
+                <button class="btn btn-outline btn-sm" id="tour-skip">Skip Tour</button>
+                <button class="btn btn-primary btn-sm" id="tour-next">Next</button>
+            </div>
+            <button class="absolute top-0 right-0 p-1" id="tour-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" width="16" height="16">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- GrapesJS and plugins -->
+    <script src="https://unpkg.com/grapesjs"></script>
+    <script src="https://unpkg.com/grapesjs-blocks-basic"></script>
+    <script src="https://unpkg.com/grapesjs-preset-webpage"></script>
+    <script src="https://unpkg.com/grapesjs-plugin-export"></script>
+
+    <!-- Main Application JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize variables
+            let editor;
+            let currentProjectId = null;
+            let currentProjectName = "New Campaign";
+            let lastSaved = null;
+            let selectedDevice = 'desktop';
+            let activeLeftTab = 'components';
+            let activeRightTab = 'properties';
+            let activeCodeTab = 'html';
+            let tourStep = 0;
+            let tourActive = false;
+
+            // DOM elements
+            const projectNameEl = document.getElementById('project-name');
+            const statusMessageEl = document.getElementById('status-message');
+            const loaderEl = document.getElementById('loader');
+            const codePanel = document.getElementById('code-panel');
+            const codeHtmlEl = document.getElementById('code-html');
+            const codeCssEl = document.getElementById('code-css');
+            const codeJsEl = document.getElementById('code-js');
+            const templateModal = document.getElementById('template-modal');
+            const exportModal = document.getElementById('export-modal');
+            const contextMenu = document.getElementById('context-menu');
+            const tourTooltip = document.getElementById('tour-tooltip');
+
+            // Update UI elements
+            function updateUI() {
+                projectNameEl.textContent = currentProjectName;
+
+                const savedDate = lastSaved ? new Date(lastSaved).toLocaleString() : 'Never';
+                statusMessageEl.textContent = `${currentProjectName} · Last saved: ${savedDate}`;
+            }
+
+            // Initialize GrapesJS editor
+            function initEditor() {
+                editor = grapesjs.init({
+                    container: '#gjs',
+                    height: '100%',
+                    width: '100%',
+                    fromElement: false,
+                    storageManager: false,
+                    deviceManager: {
+                        devices: [
+                            {
+                                name: 'Desktop',
+                                width: '',
+                                widthMedia: '1024px'
+                            },
+                            {
+                                name: 'Tablet',
+                                width: '768px',
+                                widthMedia: '768px'
+                            },
+                            {
+                                name: 'Mobile',
+                                width: '320px',
+                                widthMedia: '320px'
+                            }
+                        ]
+                    },
+                    panels: {
+                        defaults: []
+                    },
+                    plugins: [
+                        'gjs-blocks-basic',
+                        'gjs-preset-webpage',
+                        'gjs-plugin-export'
+                    ],
+                    pluginsOpts: {
+                        'gjs-blocks-basic': {},
+                        'gjs-preset-webpage': {
+                            modalImportTitle: 'Import Template',
+                            modalImportLabel: 'Paste your HTML/CSS and click Import',
+                            modalImportContent: ''
+                        },
+                        'gjs-plugin-export': {
+                            btnLabel: 'Export',
+                            filenamePfx: 'campaign-export'
+                        }
+                    },
+                    canvas: {
+                        styles: [
+                            'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
+                        ],
+                        scripts: [
+                            'https://code.jquery.com/jquery-3.5.1.slim.min.js',
+                            'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js'
+                        ]
+                    }
+                });
+
+                // Set up editor events
+                setupEditorEvents();
+
+                // Hide loader when editor is ready
+                editor.on('load', function () {
+                    setTimeout(() => {
+                        loaderEl.style.display = 'none';
+                        updateDeviceView();
+                    }, 500);
+                });
+
+                // Add custom panels content
+                setupPanels();
+
+                // Set device to desktop initially
+                updateDeviceView();
+            }
+
+            // Setup editor events
+            function setupEditorEvents() {
+                if (!editor) return;
+
+                // Listen for component selection to update the properties panel
+                editor.on('component:selected', (component) => {
+                    if (component) {
+                        // Here you would update the properties panel with the component's properties
+                        const propertiesTab = document.getElementById('properties-tab');
+                        // This is simplified - in a real app you'd generate form controls for the component properties
+                        propertiesTab.innerHTML = `
+              <h3 class="font-medium mb-2">Selected: ${component.getName()}</h3>
+              <div class="mb-4">
+                <label class="block text-sm mb-1">ID</label>
+                <input type="text" value="${component.getId()}" class="w-full">
+              </div>
+              <div class="mb-4">
+                <label class="block text-sm mb-1">Class</label>
+                <input type="text" value="${component.getClasses().join(' ')}" class="w-full">
+              </div>
+            `;
+                    }
+                });
+
+                // Listen for component deselection to reset the properties panel
+                editor.on('component:deselected', () => {
+                    const propertiesTab = document.getElementById('properties-tab');
+                    propertiesTab.innerHTML = `
+            <p class="text-neutral-400 text-center p-4">
+              Select an element to edit its properties
+            </p>
+          `;
+                });
+
+                // Listen for changes to update the code view
+                editor.on('change:changesCount', () => {
+                    updateCodeView();
+                });
+            }
+
+            // Update the device view based on selected device
+            function updateDeviceView() {
+                if (!editor) return;
+
+                const deviceButtons = document.querySelectorAll('.device-button');
+                deviceButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.device === selectedDevice) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                let width;
+                switch (selectedDevice) {
+                    case 'mobile':
+                        width = '320px';
+                        break;
+                    case 'tablet':
+                        width = '768px';
+                        break;
+                    default: // desktop
+                        width = '100%';
+                        break;
+                }
+
+                editor.setDevice(selectedDevice);
+            }
+
+            // Update the code view with the current HTML/CSS/JS
+            function updateCodeView() {
+                if (!editor) return;
+
+                const html = editor.getHtml();
+                const css = editor.getCss();
+                const js = ""; // GrapesJS doesn't have built-in JS editing, this would be custom
+
+                codeHtmlEl.textContent = html;
+                codeCssEl.textContent = css;
+                codeJsEl.textContent = js;
+            }
+
+            // Set up the editor panels content
+            function setupPanels() {
+                // This would be more extensive in a real app
+                // We'd populate the properties panel with the component's properties
+            }
+
+            // Initialize the application
+            initEditor();
+            updateUI();
+
+            // Set up tab switching
+            document.querySelectorAll('.tab-list .tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const parentPanel = this.closest('.left-panel, .right-panel');
+                    const tabName = this.dataset.tab;
+
+                    // Update active tab styles
+                    parentPanel.querySelectorAll('.tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    this.classList.add('active');
+
+                    // Show the selected tab content, hide others
+                    parentPanel.querySelectorAll('.panel-content').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    if (parentPanel.id === 'left-panel') {
+                        activeLeftTab = tabName;
+                        document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+                    } else {
+                        activeRightTab = tabName;
+                        document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+                    }
+                });
+            });
+
+            // Set up code tab switching
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const tabName = this.dataset.codeTab;
+
+                    // Update active tab styles
+                    document.querySelectorAll('.code-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    this.classList.add('active');
+
+                    // Show the selected code content, hide others
+                    document.querySelectorAll('.code-area').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    activeCodeTab = tabName;
+                    document.getElementById(`code-${tabName}`).classList.remove('hidden');
+                });
+            });
+
+            // Set up device switching
+            document.querySelectorAll('.device-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    selectedDevice = this.dataset.device;
+                    updateDeviceView();
+                });
+            });
+
+            // Toggle code panel
+            document.getElementById('toggle-code-btn').addEventListener('click', function () {
+                codePanel.classList.toggle('hidden');
+                updateCodeView();
+            });
+
+            // Close code panel
+            document.getElementById('close-code-btn').addEventListener('click', function () {
+                codePanel.classList.add('hidden');
+            });
+
+            // Template modal
+            document.getElementById('templates-btn').addEventListener('click', function () {
+                templateModal.classList.remove('hidden');
+            });
+
+            document.getElementById('browse-templates-btn').addEventListener('click', function () {
+                templateModal.classList.remove('hidden');
+            });
+
+            document.getElementById('close-template-modal').addEventListener('click', function () {
+                templateModal.classList.add('hidden');
+            });
+
+            // Template selection
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.addEventListener('click', function () {
+                    const templateId = this.dataset.templateId;
+                    alert(`Selected template ${templateId}. In a real app, this would load the template.`);
+                    templateModal.classList.add('hidden');
+                });
+            });
+
+            // Export modal
+            document.getElementById('export-btn').addEventListener('click', function () {
+                exportModal.classList.remove('hidden');
+            });
+
+            document.getElementById('close-export-modal').addEventListener('click', function () {
+                exportModal.classList.add('hidden');
+            });
+
+            document.getElementById('confirm-export-btn').addEventListener('click', function () {
+                // Get export options
+                const format = document.querySelector('[data-export-format].active').dataset.exportFormat;
+                const includeAssets = document.getElementById('include-assets').checked;
+                const minifyCode = document.getElementById('minify-code').checked;
+                const includeSourcemaps = document.getElementById('include-sourcemaps').checked;
+
+                alert(`Export in ${format} format. In a real app, this would download the exported files.`);
+                exportModal.classList.add('hidden');
+            });
+
+            document.querySelectorAll('[data-export-format]').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('[data-export-format]').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+
+            // Save button
+            document.getElementById('save-btn').addEventListener('click', function () {
+                // In a real app, this would save to the server
+                lastSaved = new Date();
+                updateUI();
+                alert("Project saved successfully!");
+            });
+
+            // New project button
+            document.getElementById('new-project-btn').addEventListener('click', function () {
+                if (confirm("Create a new project? Unsaved changes will be lost.")) {
+                    currentProjectId = null;
+                    currentProjectName = "New Campaign";
+                    lastSaved = null;
+
+                    // Reset the editor
+                    editor.DomComponents.clear();
+                    editor.setStyle('');
+
+                    updateUI();
+                }
+            });
+
+            // Back button
+            document.getElementById('back-btn').addEventListener('click', function () {
+                if (confirm("Go back to the home page? Unsaved changes will be lost.")) {
+                    window.location.href = "index.html";
+                }
+            });
+
+            // Tour button
+            document.getElementById('tour-btn').addEventListener('click', function () {
+                startTour();
+            });
+
+            // Start the tour
+            function startTour() {
+                tourActive = true;
+                tourStep = 0;
+                showTourStep();
+            }
+
+            // Show current tour step
+            function showTourStep() {
+                // Define the tour steps
+                const tourSteps = [
+                    {
+                        element: '.editor-header',
+                        title: 'Welcome to the Campaign Builder!',
+                        content: 'This tour will guide you through the main features of the editor.'
+                    },
+                    {
+                        element: '.device-button-group',
+                        title: 'Device Preview',
+                        content: 'Switch between desktop, tablet, and mobile views to see how your campaign will look on different devices.'
+                    },
+                    {
+                        element: '#left-panel',
+                        title: 'Components Panel',
+                        content: 'Drag and drop components from here onto the canvas to build your campaign.'
+                    },
+                    {
+                        element: '#canvas-area',
+                        title: 'Canvas',
+                        content: 'This is where you build your campaign. Drag components here and arrange them as needed.'
+                    },
+                    {
+                        element: '#right-panel',
+                        title: 'Properties Panel',
+                        content: 'Edit the properties and styles of selected components here.'
+                    },
+                    {
+                        element: '#editor-footer',
+                        title: 'Status Bar',
+                        content: 'View project status and access the code panel to see your HTML, CSS, and JS.'
+                    }
+                ];
+
+                if (tourStep >= tourSteps.length) {
+                    // End of tour
+                    tourActive = false;
+                    tourTooltip.classList.add('hidden');
+                    return;
+                }
+
+                const step = tourSteps[tourStep];
+                const targetElement = document.querySelector(step.element);
+
+                if (targetElement) {
+                    const rect = targetElement.getBoundingClientRect();
+                    const tooltipWidth = 300;
+
+                    // Position the tooltip
+                    let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+                    let top = rect.bottom + 10;
+
+                    // Adjust if the tooltip would go outside the viewport
+                    if (left < 10) left = 10;
+                    if (left + tooltipWidth > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipWidth - 10;
+                    }
+
+                    // If the tooltip would go below the viewport, position it above the element
+                    if (top + 150 > window.innerHeight) {
+                        top = rect.top - 150 - 10;
+                    }
+
+                    tourTooltip.style.left = left + 'px';
+                    tourTooltip.style.top = top + 'px';
+                    tourTooltip.style.width = tooltipWidth + 'px';
+
+                    // Update the tooltip content
+                    document.getElementById('tour-content').innerHTML = `
+            <h4 class="font-medium mb-2">${step.title}</h4>
+            <p>${step.content}</p>
+          `;
+
+                    // Show/hide next/back buttons
+                    document.getElementById('tour-next').textContent = tourStep === tourSteps.length - 1 ? 'Finish' : 'Next';
+
+                    // Show the tooltip
+                    tourTooltip.classList.remove('hidden');
+                }
+            }
+
+            // Tour navigation
+            document.getElementById('tour-next').addEventListener('click', function () {
+                tourStep++;
+                showTourStep();
+            });
+
+            document.getElementById('tour-skip').addEventListener('click', function () {
+                tourActive = false;
+                tourTooltip.classList.add('hidden');
+            });
+
+            document.getElementById('tour-close').addEventListener('click', function () {
+                tourActive = false;
+                tourTooltip.classList.add('hidden');
+            });
+
+            // Click outside to close modals
+            window.addEventListener('click', function (e) {
+                if (e.target === templateModal) {
+                    templateModal.classList.add('hidden');
+                }
+                if (e.target === exportModal) {
+                    exportModal.classList.add('hidden');
+                }
+            });
+
+            // Handle context menu (right-click)
+            document.addEventListener('contextmenu', function (e) {
+                // Only show custom context menu when right-clicking on canvas elements
+                if (e.target.closest('#gjs')) {
+                    e.preventDefault();
+
+                    contextMenu.style.left = e.pageX + 'px';
+                    contextMenu.style.top = e.pageY + 'px';
+                    contextMenu.classList.remove('hidden');
+                }
+            });
+
+            // Hide context menu on click elsewhere
+            document.addEventListener('click', function () {
+                contextMenu.classList.add('hidden');
+            });
+
+            // Handle context menu actions
+            document.querySelectorAll('.context-menu-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    const action = this.dataset.action;
+
+                    // Handle the action based on the selected component
+                    const selected = editor.getSelected();
+                    if (selected) {
+                        switch (action) {
+                            case 'copy':
+                                editor.Commands.run('tlb-clone');
+                                break;
+                            case 'paste':
+                                // Would need a storage mechanism for the copied component
+                                break;
+                            case 'delete':
+                                editor.Commands.run('tlb-delete');
+                                break;
+                            case 'duplicate':
+                                editor.Commands.run('tlb-clone');
+                                break;
+                            case 'move-up':
+                                // Move the component up in the hierarchy
+                                break;
+                            case 'move-down':
+                                // Move the component down in the hierarchy
+                                break;
+                        }
+                    }
+
+                    contextMenu.classList.add('hidden');
+                });
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function () {
+                if (tourActive) {
+                    showTourStep(); // Reposition the tour tooltip
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

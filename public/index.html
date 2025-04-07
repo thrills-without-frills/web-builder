@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Builder</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/theme.css" />
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="./stylesheets/pages/home.css" />
+</head>
+
+<body>
+    <!-- Home Page -->
+    <div class="home-page">
+        <header class="bg-white border-b py-4 px-6">
+            <div class="container flex items-center justify-between">
+                <h1 class="text-primary font-semibold text-2xl">Campaign Builder</h1>
+                <div class="flex space-x-2">
+                    <button class="btn btn-outline btn-sm">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        Import
+                    </button>
+                    <button class="btn btn-outline btn-sm">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="btn btn-primary btn-sm tour-new-project">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        New Project
+                    </button>
+                    <button class="btn btn-outline btn-icon" title="Start Tour">
+                        <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container py-8">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-semibold text-neutral-800">My Projects</h2>
+                <div class="flex space-x-2">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-2.5 text-neutral-400 w-4 h-4" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" placeholder="Search projects..." class="pl-9 w-60">
+                    </div>
+                    <button class="btn btn-outline btn-icon">
+                        <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <polyline points="19 12 12 19 5 12"></polyline>
+                        </svg>
+                    </button>
+                    <button class="btn btn-primary btn-icon">
+                        <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </button>
+                    <button class="btn btn-outline btn-icon">
+                        <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tour-projects">
+                <!-- Sample Project Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card project-card">
+                        <div class="bg-neutral-200 h-40 flex items-center justify-center">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="font-medium mb-1">Travel Campaign</h3>
+                            <p class="text-sm text-neutral-500 line-clamp-2">Summer vacation promotion with special
+                                discounts.</p>
+                            <p class="text-xs text-neutral-400 mt-2">Last updated: 4/5/2025</p>
+                        </div>
+                        <div class="card-footer mt-auto">
+                            <a href="/editor/1" class="btn btn-primary w-full">Edit Campaign</a>
+                        </div>
+                    </div>
+
+                    <div class="card project-card">
+                        <div class="bg-neutral-200 h-40 flex items-center justify-center">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="font-medium mb-1">Product Launch</h3>
+                            <p class="text-sm text-neutral-500 line-clamp-2">New product announcement with feature
+                                highlights.</p>
+                            <p class="text-xs text-neutral-400 mt-2">Last updated: 4/3/2025</p>
+                        </div>
+                        <div class="card-footer mt-auto">
+                            <a href="/editor/2" class="btn btn-primary w-full">Edit Campaign</a>
+                        </div>
+                    </div>
+
+                    <div class="card project-card">
+                        <div class="bg-neutral-200 h-40 flex items-center justify-center">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="font-medium mb-1">Holiday Special</h3>
+                            <p class="text-sm text-neutral-500 line-clamp-2">End of year promotion with holiday theme
+                                and offers.</p>
+                            <p class="text-xs text-neutral-400 mt-2">Last updated: 4/1/2025</p>
+                        </div>
+                        <div class="card-footer mt-auto">
+                            <a href="/editor/3" class="btn btn-primary w-full">Edit Campaign</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="text-2xl font-semibold text-neutral-800 mt-12 mb-6">Templates</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 tour-templates">
+                <div class="card hover-shadow">
+                    <div class="template-thumbnail">
+                        <span class="text-4xl text-neutral-400">🖼️</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="font-medium mb-1">Google Flights Style</h3>
+                        <p class="text-xs text-neutral-500">Travel</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/editor?template=1" class="btn btn-outline btn-sm w-full">Use Template</a>
+                    </div>
+                </div>
+
+                <div class="card hover-shadow">
+                    <div class="template-thumbnail">
+                        <span class="text-4xl text-neutral-400">🖼️</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="font-medium mb-1">Product Showcase</h3>
+                        <p class="text-xs text-neutral-500">E-commerce</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/editor?template=2" class="btn btn-outline btn-sm w-full">Use Template</a>
+                    </div>
+                </div>
+
+                <div class="card hover-shadow">
+                    <div class="template-thumbnail">
+                        <span class="text-4xl text-neutral-400">🖼️</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="font-medium mb-1">Newsletter</h3>
+                        <p class="text-xs text-neutral-500">Marketing</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/editor?template=3" class="btn btn-outline btn-sm w-full">Use Template</a>
+                    </div>
+                </div>
+
+                <div class="card hover-shadow">
+                    <div class="template-thumbnail">
+                        <span class="text-4xl text-neutral-400">🖼️</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="font-medium mb-1">Event Invitation</h3>
+                        <p class="text-xs text-neutral-500">Events</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/editor?template=4" class="btn btn-outline btn-sm w-full">Use Template</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Editor Page (initially hidden, would be shown via JavaScript) -->
+    <div class="editor-container tour-editor" style="display: none;">
+        <div class="relative">
+            <div class="editor-header">
+                <div class="flex items-center">
+                    <h1 class="font-semibold">New Campaign</h1>
+                </div>
+                <div class="flex space-x-2">
+                    <button class="btn btn-outline btn-sm">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="3" x2="9" y2="21"></line>
+                        </svg>
+                        Templates
+                    </button>
+                    <button class="btn btn-outline btn-sm">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="btn btn-primary btn-sm">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                        Save
+                    </button>
+                    <button class="btn btn-outline btn-sm">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        New Project
+                    </button>
+                </div>
+                <button class="absolute right-2 top-2 btn btn-outline btn-icon" title="Start Tutorial">
+                    <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="editor-toolbar tour-device-switch">
+                <div class="flex">
+                    <button class="device-button">
+                        <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                        Mobile
+                    </button>
+                    <button class="device-button">
+                        <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                            <rect x="9" y="9" width="6" height="6"></rect>
+                            <line x1="9" y1="1" x2="9" y2="4"></line>
+                            <line x1="15" y1="1" x2="15" y2="4"></line>
+                            <line x1="9" y1="20" x2="9" y2="23"></line>
+                            <line x1="15" y1="20" x2="15" y2="23"></line>
+                            <line x1="20" y1="9" x2="23" y2="9"></line>
+                            <line x1="20" y1="14" x2="23" y2="14"></line>
+                            <line x1="1" y1="9" x2="4" y2="9"></line>
+                            <line x1="1" y1="14" x2="4" y2="14"></line>
+                        </svg>
+                        Tablet
+                    </button>
+                    <button class="device-button active">
+                        <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        Desktop
+                    </button>
+                </div>
+            </div>
+
+            <div class="editor-main">
+                <div class="left-panel tour-components-panel">
+                    <div class="tab-list">
+                        <div class="tab active">Components</div>
+                        <div class="tab">Assets</div>
+                        <div class="tab">Pages</div>
+                    </div>
+
+                    <div class="panel-content">
+                        <h3 class="font-medium mb-2">Basic</h3>
+                        <div class="components-list">
+                            <div class="component-item">Text</div>
+                            <div class="component-item">Heading</div>
+                            <div class="component-item">Button</div>
+                            <div class="component-item">Image</div>
+                            <div class="component-item">Link</div>
+                            <div class="component-item">Video</div>
+                        </div>
+
+                        <h3 class="font-medium mb-2 mt-4">Layout</h3>
+                        <div class="components-list">
+                            <div class="component-item">Container</div>
+                            <div class="component-item">Row</div>
+                            <div class="component-item">Column</div>
+                            <div class="component-item">Section</div>
+                            <div class="component-item">Flexbox</div>
+                            <div class="component-item">Grid</div>
+                        </div>
+
+                        <h3 class="font-medium mb-2 mt-4">Components</h3>
+                        <div class="components-list">
+                            <div class="component-item">Card</div>
+                            <div class="component-item">Form</div>
+                            <div class="component-item">Table</div>
+                            <div class="component-item">Navbar</div>
+                            <div class="component-item">Footer</div>
+                            <div class="component-item">Slider</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="canvas-area tour-canvas-area">
+                    <div class="device-frame" style="width: 1280px; height: 800px;">
+                        <div style="padding: 20px; min-height: 100%;">
+                            <!-- Canvas content would be rendered here by GrapesJS -->
+                            <div style="text-align: center; padding: 40px; color: #999;">
+                                <h2 style="margin-bottom: 20px; color: #666;">Drag components here to start building
+                                </h2>
+                                <p>Use the panels on the left and right to add components and customize their properties
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-panel tour-properties-panel">
+                    <div class="tab-list">
+                        <div class="tab active">Properties</div>
+                        <div class="tab">Styles</div>
+                        <div class="tab">Layers</div>
+                    </div>
+
+                    <div class="panel-content">
+                        <p class="text-neutral-400 text-center p-4">Select an element to edit its properties</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tour-code-panel">
+                <div class="code-panel">
+                    <div class="code-header">
+                        <div class="code-tabs">
+                            <div class="code-tab active">HTML</div>
+                            <div class="code-tab">CSS</div>
+                            <div class="code-tab">JS</div>
+                        </div>
+                        <button class="btn btn-outline btn-sm">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                            Close
+                        </button>
+                    </div>
+                    <div class="code-content">
+                        <div class="code-area">
+                            &lt;!DOCTYPE html&gt;
+                            &lt;html&gt;
+                            &lt;head&gt;
+                            &lt;meta charset="utf-8"&gt;
+                            &lt;title&gt;My Campaign&lt;/title&gt;
+                            &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+                            &lt;link rel="stylesheet" href="./style.css"&gt;
+                            &lt;/head&gt;
+                            &lt;body&gt;
+                            &lt;div style="text-align: center; padding: 40px;"&gt;
+                            &lt;h2 style="margin-bottom: 20px;"&gt;Drag components here to start building&lt;/h2&gt;
+                            &lt;p&gt;Use the panels on the left and right to add components and customize their
+                            properties&lt;/p&gt;
+                            &lt;/div&gt;
+                            &lt;script src="./script.js"&gt;&lt;/script&gt;
+                            &lt;/body&gt;
+                            &lt;/html&gt;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="editor-footer tour-status-bar">
+                <div>New Campaign · Last saved: Never</div>
+                <div class="flex items-center">
+                    <button class="btn btn-outline btn-sm">
+                        <svg class="icon icon-solo mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                        View Code
+                    </button>
+                </div>
+            </div>
+
+            <!-- Template Modal (initially hidden) -->
+            <div class="modal-overlay" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="font-medium">Choose a Template</h3>
+                        <button class="btn btn-outline btn-icon">
+                            <svg class="icon icon-solo" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="card hover-shadow">
+                                <div class="template-thumbnail">
+                                    <span class="text-4xl text-neutral-400">🖼️</span>
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="font-medium mb-1">Google Flights Style</h3>
+                                    <p class="text-xs text-neutral-500">Travel</p>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-sm w-full">Use Template</button>
+                                </div>
+                            </div>
+
+                            <div class="card hover-shadow">
+                                <div class="template-thumbnail">
+                                    <span class="text-4xl text-neutral-400">🖼️</span>
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="font-medium mb-1">Product Showcase</h3>
+                                    <p class="text-xs text-neutral-500">E-commerce</p>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-sm w-full">Use Template</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript would be used to toggle between pages and handle interactions -->
+    <script>
+        // This is a placeholder for the JavaScript that would power this application
+        // In a real implementation, this would include:
+        // - Navigation between home and editor pages
+        // - Initializing GrapesJS
+        // - Handling drag and drop of components
+        // - Managing the device preview modes
+        // - Toggling code view and other panels
+        // - Loading and saving projects
+        // - Handling the tour functionality
+
+        // Example of navigation code:
+        function showHomePage() {
+            document.querySelector('.home-page').style.display = 'block';
+            document.querySelector('.editor-container').style.display = 'none';
+        }
+
+        function showEditorPage() {
+            document.querySelector('.home-page').style.display = 'none';
+            document.querySelector('.editor-container').style.display = 'block';
+        }
+
+        // Example function to initialize GrapesJS (would be called when showing editor)
+        function initEditor() {
+            // This would initialize GrapesJS with the proper configuration
+            // In a real implementation, this would be quite extensive
+        }
+
+        // Initialize the application to show home page by default
+        document.addEventListener('DOMContentLoaded', function () {
+            showHomePage();
+
+            // Add event listeners for navigation
+            document.querySelectorAll('.tour-new-project, .btn-primary').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showEditorPage();
+                    initEditor();
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
