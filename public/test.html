@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
     <style>
         * {
@@ -13,19 +16,106 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         .gjs-cv-canvas {
             top: 0;
             width: 100%;
             height: 100%;
         }
+
+        .gjs-block {
+            width: auto;
+            height: auto;
+            min-height: auto;
+        }
+
+        .panel__top {
+            padding: 0;
+            width: 100%;
+            display: flex;
+            position: initial;
+            justify-content: center;
+            justify-content: space-between;
+        }
+
+        .panel__basic-actions {
+            position: initial;
+        }
     </style>
 </head>
+
 <body>
-    <div id="ccEditor">
-        <h1>GrapesJS</h1>
+    <div id="ccEditorWrpper">
+        <div class="panel__top">
+            <div class="panel__basic-actions"></div>
+        </div>
+        <div id="ccEditor">
+            <h1>GrapesJS</h1>
+        </div>
+        <div id="blocks"></div>
     </div>
     <script src="//unpkg.com/grapesjs"></script>
     <script>
+        const getBasicBlocks = () => {
+            return [
+                {
+                    id: 'text',
+                    label: 'Text',
+                    content: { type: 'text' },
+                    category: 'Basic',
+                    attributes: { class: 'fa fa-font' },
+                },
+                {
+                    id: 'image',
+                    label: 'Image',
+                    content: { type: 'image' },
+                    category: 'Basic',
+                    attributes: { class: 'fa fa-image' },
+                    activate: true,
+                    select: true
+                },
+                {
+                    id: 'link',
+                    label: 'Link',
+                    content: { type: 'link' },
+                    category: 'Basic',
+                    attributes: { class: 'fa fa-link' },
+                },
+                {
+                    id: 'button',
+                    label: 'Button',
+                    content: '<button class="btn">Click Me</button>',
+                    category: 'Basic',
+                    attributes: { class: 'fa fa-hand-pointer' },
+                },
+                {
+                    id: 'video',
+                    label: 'Video',
+                    content: '<video controls><source src="movie.mp4" type="video/mp4">Your browser does not support the video tag.</video>',
+                    category: 'Basic',
+                    attributes: { class: 'fa fa-film' },
+                },
+                {
+                    id: 'form',
+                    label: 'Form',
+                    content: '<form><input type="text" placeholder="Your Name"><input type="email" placeholder="Your Email"><button type="submit">Submit</button></form>',
+                    category: 'Basic',
+                    attributes: { class: 'fa fa-file-pen' },
+                }
+            ];
+        }
+
+        const getTableBlocks = () => {
+            return [
+                {
+                    id: 'table',
+                    label: 'Table',
+                    content: { type: 'table' },
+                    category: 'Table',
+                    attributes: { class: 'fa fa-table' },
+                }
+            ];
+        }
         const editor = grapesjs.init({
             container: '#ccEditor',
             fromElement: true,
@@ -33,7 +123,92 @@
             width: 'auto',
             storageManager: false,
             panels: { defaults: [] },
+            blockManager: {
+                appendTo: '#blocks',
+                blocks: getBasicBlocks(),
+            },
+        });
+        editor.BlockManager.add('#fullWidth', {
+            label: 'Full width block',
+            category: 'Basic',
+            content: '<div>Hello World</div>',
+            attributes: { class: 'fa fa-arrows-alt' },
+        });
+        editor.BlockManager.add('my-block-id', {
+            label: 'My Block',
+            category: 'Basic',
+            attributes: { class: 'fa fa-cog' },
+            content: {
+                tagName: 'div',
+                draggable: false,
+                attributes: { 'some-attribute': 'some-value' },
+                components: [
+                    {
+                        tagName: 'span',
+                        content: '<b>Some static content</b>',
+                    },
+                    {
+                        tagName: 'div',
+                        // use `content` for static strings, `components` string will be parsed
+                        // and transformed in Components
+                        components: '<span>HTML at some point</span>',
+                    },
+                ],
+            },
+        });
+
+        const updateComponent = (component, content) => {
+            const wrapper = editor.DomComponents.getWrapper();
+            const myComponent = wrapper.find(component)[0];
+            if (!myComponent || !Array.isArray) {
+                console.log('Component not found');
+                return;
+            }
+            myComponent.components().forEach(component => console.log(component));
+            myComponent.components(content);
+        }
+        updateComponent('div.my-component', '<div>New content</div>');
+
+        editor.Panels.addPanel({
+            id: 'panel-top',
+            el: '.panel__top',
+        });
+        editor.Panels.addPanel({
+            id: 'basic-actions',
+            el: '.panel__basic-actions',
+            buttons: [
+                {
+                    id: 'visibility',
+                    active: true, // active by default
+                    className: 'btn-toggle-borders',
+                    label: '<u>B</u>',
+                    command: 'sw-visibility', // Built-in command
+                },
+                {
+                    id: 'export',
+                    className: 'btn-open-export',
+                    label: 'Exp',
+                    command: 'export-template',
+                    context: 'export-template', // For grouping context of buttons from the same panel
+                },
+                {
+                    id: 'show-json',
+                    className: 'btn-show-json',
+                    label: 'JSON',
+                    context: 'show-json',
+                    command(editor) {
+                        editor.Modal.setTitle('Components JSON')
+                            .setContent(
+                                `<textarea style="width:100%; height: 250px;">
+            ${JSON.stringify(editor.getComponents())}
+          </textarea>`,
+                            )
+                            .open();
+                    },
+                },
+            ],
         });
     </script>
+    <!-- Blocks : id, lablel, content, attributes, select, active   -->
 </body>
 </html>
