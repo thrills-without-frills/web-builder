@@ -632,27 +632,27 @@
     /* Responsive Utilities */
     
     @media (min-width: 640px) {
-      .sm\:grid-cols-2 {
+      .grid-sm-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
     
     @media (min-width: 768px) {
-      .md\:grid-cols-2 {
+      .grid-md-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       
-      .md\:grid-cols-3 {
+      .grid-md-cols-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
     
     @media (min-width: 1024px) {
-      .lg\:grid-cols-3 {
+      .grid-lg-cols-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
       
-      .lg\:grid-cols-4 {
+      .grid-lg-cols-4 {
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
     }
@@ -1039,7 +1039,7 @@
         </div>
         
         <!-- Projects Grid (shown when there are projects) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid" style="display: none;">
+        <div class="grid grid-cols-1 grid-sm-cols-2 grid-lg-cols-3 gap-6" id="projects-grid" style="display: none;">
           <!-- New Project Card -->
           <div class="create-project-card cursor-pointer" id="create-project-card">
             <svg class="create-project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1168,7 +1168,7 @@
         </div>
         
         <!-- Templates Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 grid-sm-cols-2 grid-md-cols-3 grid-lg-cols-4 gap-6">
           <div class="card">
             <div class="template-thumbnail">
               <img src="https://via.placeholder.com/400x160/f3f4f6/9ca3af?text=Google+Flights" alt="Google Flights Style" class="w-full h-full object-cover">

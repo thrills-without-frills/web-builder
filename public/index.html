@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campaign Builder</title>
-    <link rel="stylesheet" type="text/css" href="./stylesheets/theme.css" />
-    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css" />
-    <link rel="stylesheet" type="text/css" href="./stylesheets/pages/home.css" />
+    <link rel="stylesheet" type="text/css" href="./css/theme.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./css/pages/home.css" />
 </head>
 
 <body>
@@ -55,8 +55,8 @@
             </div>
         </header>
 
-        <main class="container py-8">
-            <div class="flex items-center justify-between mb-8">
+        <main class="container py-4">
+            <div class="flex items-center justify-between mb-2">
                 <h2 class="text-2xl font-semibold text-neutral-800">My Projects</h2>
                 <div class="flex space-x-2">
                     <div class="relative">
@@ -99,7 +99,7 @@
 
             <div class="tour-projects">
                 <!-- Sample Project Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 grid-md-cols-2 grid-lg-cols-3 gap-6">
                     <div class="card project-card">
                         <div class="bg-neutral-200 h-40 flex items-center justify-center">
                             <span class="text-4xl text-neutral-400">🖼️</span>
@@ -147,57 +147,59 @@
                 </div>
             </div>
 
-            <h2 class="text-2xl font-semibold text-neutral-800 mt-12 mb-6">Templates</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 tour-templates">
-                <div class="card hover-shadow">
-                    <div class="template-thumbnail">
-                        <span class="text-4xl text-neutral-400">🖼️</span>
+            <div class="mb-2 mt-4">
+                <h2 class="text-2xl font-semibold text-neutral-800 mb-2">Templates</h2>
+                <div class="grid grid-cols-1 grid-md-cols-2 grid-lg-cols-4 gap-6 tour-templates">
+                    <div class="card hover-shadow">
+                        <div class="template-thumbnail">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="font-medium mb-1">Google Flights Style</h3>
+                            <p class="text-xs text-neutral-500">Travel</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/editor?template=1" class="btn btn-outline btn-sm w-full">Use Template</a>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <h3 class="font-medium mb-1">Google Flights Style</h3>
-                        <p class="text-xs text-neutral-500">Travel</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/editor?template=1" class="btn btn-outline btn-sm w-full">Use Template</a>
-                    </div>
-                </div>
 
-                <div class="card hover-shadow">
-                    <div class="template-thumbnail">
-                        <span class="text-4xl text-neutral-400">🖼️</span>
+                    <div class="card hover-shadow">
+                        <div class="template-thumbnail">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="font-medium mb-1">Product Showcase</h3>
+                            <p class="text-xs text-neutral-500">E-commerce</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/editor?template=2" class="btn btn-outline btn-sm w-full">Use Template</a>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <h3 class="font-medium mb-1">Product Showcase</h3>
-                        <p class="text-xs text-neutral-500">E-commerce</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/editor?template=2" class="btn btn-outline btn-sm w-full">Use Template</a>
-                    </div>
-                </div>
 
-                <div class="card hover-shadow">
-                    <div class="template-thumbnail">
-                        <span class="text-4xl text-neutral-400">🖼️</span>
+                    <div class="card hover-shadow">
+                        <div class="template-thumbnail">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="font-medium mb-1">Newsletter</h3>
+                            <p class="text-xs text-neutral-500">Marketing</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/editor?template=3" class="btn btn-outline btn-sm w-full">Use Template</a>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <h3 class="font-medium mb-1">Newsletter</h3>
-                        <p class="text-xs text-neutral-500">Marketing</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/editor?template=3" class="btn btn-outline btn-sm w-full">Use Template</a>
-                    </div>
-                </div>
 
-                <div class="card hover-shadow">
-                    <div class="template-thumbnail">
-                        <span class="text-4xl text-neutral-400">🖼️</span>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="font-medium mb-1">Event Invitation</h3>
-                        <p class="text-xs text-neutral-500">Events</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/editor?template=4" class="btn btn-outline btn-sm w-full">Use Template</a>
+                    <div class="card hover-shadow">
+                        <div class="template-thumbnail">
+                            <span class="text-4xl text-neutral-400">🖼️</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="font-medium mb-1">Event Invitation</h3>
+                            <p class="text-xs text-neutral-500">Events</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/editor?template=4" class="btn btn-outline btn-sm w-full">Use Template</a>
+                        </div>
                     </div>
                 </div>
             </div>

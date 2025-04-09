@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css" />
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .gjs-cv-canvas {
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="ccEditor">
+        <h1>GrapesJS</h1>
+    </div>
+    <script src="//unpkg.com/grapesjs"></script>
+    <script>
+        const editor = grapesjs.init({
+            container: '#ccEditor',
+            fromElement: true,
+            height: '300px',
+            width: 'auto',
+            storageManager: false,
+            panels: { defaults: [] },
+        });
+    </script>
+</body>
+</html>

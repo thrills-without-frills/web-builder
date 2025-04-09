@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Campaign Craft</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.20.3/css/grapes.min.css">
+</head>
+
+<body>
+    <header>
+        <h1>Campaign Craft</h1>
+    </header>
+    <main>
+        <div id="styles-container" class="gjs-styles-c"></div>
+        <div id="trait-container" class="gjs-traits-c"></div>
+        <div id="blocks-container" class="gjs-blocks-c"></div>
+        <div id="selectors-container" class="gjs-selectors-c"></div>
+        <div id="ccEditor">
+            <div id="blocks" class="gjs-blocks-c">
+                <h2>Blocks</h2>
+            </div>
+            <div id="editor" class="gjs-editor-c">
+                <h2>Editor</h2>
+                <div id="main"></div>
+            </div>
+            <div id="style-panel" class="gjs-style-panel">
+                <h2>Style Panel</h2>
+            </div>
+            <div id="layer-panel" class="gjs-layer-panel">
+                <h2>Layer Panel</h2>
+            </div>
+            <div id="settings-panel" class="gjs-settings-panel">
+                <h2>Settings Panel</h2>
+            </div>
+            <div id="preview-panel" class="gjs-preview-panel">
+                <h2>Preview Panel</h2>
+            </div>
+            <div id="command-panel" class="gjs-command-panel">
+                <h2>Command Panel</h2>
+            </div>
+            <div id="styles" class="gjs-styles-c">
+                <h2>Styles</h2>
+                <div id="style-panel"></div>
+            </div>
+            <div id="layers" class="gjs-layers-c">
+                <h2>Layers</h2>
+                <div id="layer-panel"></div>
+            </div>
+            <div id="settings" class="gjs-settings-c">
+                <h2>Settings</h2>
+                <div id="settings-panel"></div>
+            </div>
+            <div id="preview" class="gjs-preview-c">
+                <h2>Preview</h2>
+                <div id="preview-panel"></div>
+            </div>
+            <div id="commands" class="gjs-commands-c">
+                <h2>Commands</h2>
+                <div id="command-panel"></div>
+            </div>
+            <div id="canvas" class="gjs-canvas-c">
+                <h2>Canvas</h2>
+                <div id="canvas-panel"></div>
+            </div>
+            <div id="export" class="gjs-export-c">
+                <h2>Export</h2>
+                <div id="export-panel"></div>
+            </div>
+            <div id="undo" class="gjs-undo-c">
+                <h2>Undo</h2>
+                <div id="undo-panel"></div>
+            </div>
+            <div id="redo" class="gjs-redo-c">
+                <h2>Redo</h2>
+                <div id="redo-panel"></div>
+            </div>
+            <div id="save" class="gjs-save-c">
+                <h2>Save</h2>
+                <div id="save-panel"></div>
+            </div>
+            <div id="load" class="gjs-load-c">
+                <h2>Load</h2>
+                <div id="load-panel"></div>
+            </div>
+            <div id="clear" class="gjs-clear-c">
+                <h2>Clear</h2>
+                <div id="clear-panel"></div>
+            </div>
+            <div id="fullscreen" class="gjs-fullscreen-c">
+                <h2>Fullscreen</h2>
+                <div id="fullscreen-panel"></div>
+            </div>
+            <div id="export-html" class="gjs-export-html-c">
+                <h2>Export HTML</h2>
+                <div id="export-html-panel"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+        integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.20.3/grapes.min.js"></script>
+    <script>
+        const setupEditor = () => {
+            const editor = grapesjs.init({
+                container: '#ccEditor',
+                fromElement: true,
+                height: '100%',
+                width: 'auto',
+                storageManager: false,
+                blockManager: {
+                    appendTo: '#blocks',
+                },
+                styleManager: {
+                    appendTo: '#styles-container',
+                },
+                layerManager: {
+                    appendTo: '#layers-container',
+                },
+                traitManager: {
+                    appendTo: '#trait-container',
+                },
+                selectorManager: {
+                    appendTo: '#styles-container',
+                },
+                deviceManager: {},
+            });
+
+            return editor;
+        };
+
+        const setupStorage = (editor, type) => {
+            if(type === 'local') {
+                editor.Storage.add('local', {
+                    get: (key) => {
+                        const data = localStorage.getItem(key);
+                        return data ? JSON.parse(data) : null;
+                    },
+                    set: (key, value) => {
+                        localStorage.setItem(key, JSON.stringify(value));
+                    },
+                });
+            } else if (type === 'remote') {
+                editor.Storage.add('remote', {
+                    get: (key) => {
+                        return fetch(`/storage/${key}`)
+                            .then(response => response.json())
+                            .catch(() => null);
+                    },
+                    set: (key, value) => {
+                        return fetch(`/storage/${key}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(value),
+                        });
+                    },
+                });
+            }
+
+            return editor;
+        };
+
+        const setupPanels = (editor) => {
+            const panels = {
+                defaults: [
+                    {
+                        id: 'layers',
+                        el: '#layers',
+                        resizable: true,
+                    },
+                    {
+                        id: 'styles',
+                        el: '#styles',
+                        resizable: true,
+                    },
+                    {
+                        id: 'blocks',
+                        el: '#blocks',
+                        resizable: true,
+                    },
+                    {
+                        id: 'commands',
+                        el: '#commands',
+                        resizable: true,
+                    },
+                    {
+                        id: 'canvas',
+                        el: '#canvas',
+                        resizable: true,
+                    },
+                    {
+                        id: 'export',
+                        el: '#export',
+                        resizable: true,
+                    },
+                    {
+                        id: 'fullscreen',
+                        el: '#fullscreen',
+                        resizable: true,
+                    },
+                ],
+            };
+            /*
+            const stylesPanel = editor.Panels.addPanel({
+                id: 'styles',
+                el: '#styles',
+                resizable: true,
+            });
+            stylesPanel.addButton({
+                id: 'styles-title',
+                className: 'fa fa-paint-brush',
+                command: 'open-styles',
+                attributes: { title: 'Styles' },
+            });
+
+            // Create a style panel container
+            const stylePanelContainer = document.getElementById('style-panel');
+
+            // Add some style controls (example: color picker)
+            editor.BlockManager.add('style-color', {
+                label: 'Color',
+                content: {
+                    type: 'text',
+                    style: { 'color': '#000' },
+                    attributes: { placeholder: 'Enter color' },
+                },
+            });
+            */
+
+            editor.Panels.addPanel(panels);
+
+            return editor;
+        };
+
+        const setupCommands = (editor) => {
+            editor.Commands.add('export-html', {
+                run(editor) {
+                    const html = editor.getHtml();
+                    const css = editor.getCss();
+                    const blob = new Blob([html + `<style>${css}</style>`], { type: 'text/html' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'export.html';
+                    link.click();
+                },
+            });
+
+            editor.Panels.addButton('export', {
+                id: 'export-html',
+                className: 'fa fa-download',
+                command: 'export-html',
+                attributes: { title: 'Export HTML' },
+            });
+
+            return editor;
+        };
+
+        const setupBlocks = (editor) => {
+            editor.BlockManager.add('simple-block', {
+                label: 'Simple Block',
+                content: '<div class="my-block">This is a simple block!</div>',
+            });
+
+            return editor;
+        };
+
+        const setupEditorEvents = (editor) => {
+            editor.on('load', () => {
+                console.log('Editor loaded');
+                const html = editor.getHtml();
+                const css = editor.getCss();
+                const js = editor.getJs();
+                console.log('Loaded HTML:', html);
+                console.log('Loaded CSS:', css);
+                console.log('Loaded JS:', js);
+            });
+
+            editor.on('storage:load', () => {
+                console.log('Storage loaded');
+            });
+
+            editor.on('storage:store', () => {
+                console.log('Storage stored');
+            });
+
+            editor.on('component:add', (model) => {
+                console.log('Component added:', model);
+            });
+
+            editor.on('component:remove', (model) => {
+                console.log('Component removed:', model);
+            });
+
+            editor.on('component:update', (model) => {
+                console.log('Component updated:', model);
+            });
+
+            return editor;
+        };
+        const setupPanelsEvents = (editor) => {
+            editor.on('panel:change', (model) => {
+                console.log('Panel changed:', model);
+            });
+
+            editor.on('panel:select', (model) => {
+                console.log('Panel selected:', model);
+            });
+
+            editor.on('panel:deselect', (model) => {
+                console.log('Panel deselected:', model);
+            });
+
+            return editor;
+        };
+        const setupCommandsEvents = (editor) => {
+            editor.on('command:run', (model) => {
+                console.log('Command run:', model);
+            });
+
+            editor.on('command:stop', (model) => {
+                console.log('Command stopped:', model);
+            });
+
+            return editor;
+        };
+        const setupBlocksEvents = (editor) => {
+            editor.on('block:add', (model) => {
+                console.log('Block added:', model);
+            });
+
+            editor.on('block:remove', (model) => {
+                console.log('Block removed:', model);
+            });
+
+            editor.on('block:update', (model) => {
+                console.log('Block updated:', model);
+            });
+
+            return editor;
+        };
+        const setupStylesEvents = (editor) => {
+            editor.on('style:change', (model) => {
+                console.log('Style changed:', model);
+            });
+
+            editor.on('style:update', (model) => {
+                console.log('Style updated:', model);
+            });
+
+            editor.on('style:remove', (model) => {
+                console.log('Style removed:', model);
+            });
+
+            return editor;
+        };
+        const setupComponentsEvents = (editor) => {
+            editor.on('component:select', (model) => {
+                console.log('Component selected:', model);
+            });
+
+            editor.on('component:deselect', (model) => {
+                console.log('Component deselected:', model);
+            });
+
+            editor.on('component:change', (model) => {
+                console.log('Component changed:', model);
+            });
+
+            return editor;
+        };
+        const setupStyleManagerEvents = (editor) => {
+            editor.on('style:change', (model) => {
+                console.log('Style changed:', model);
+            });
+
+            editor.on('style:update', (model) => {
+                console.log('Style updated:', model);
+            });
+
+            editor.on('style:remove', (model) => {
+                console.log('Style removed:', model);
+            });
+
+            return editor;
+        };
+        const setupTraitManagerEvents = (editor) => {
+            editor.on('trait:change', (model) => {
+                console.log('Trait changed:', model);
+            });
+
+            editor.on('trait:update', (model) => {
+                console.log('Trait updated:', model);
+            });
+
+            editor.on('trait:remove', (model) => {
+                console.log('Trait removed:', model);
+            });
+
+            return editor;
+        };
+        const setupSelectorManagerEvents = (editor) => {
+            editor.on('selector:add', (model) => {
+                console.log('Selector added:', model);
+            });
+
+            editor.on('selector:remove', (model) => {
+                console.log('Selector removed:', model);
+            });
+
+            editor.on('selector:update', (model) => {
+                console.log('Selector updated:', model);
+            });
+
+            return editor;
+        };
+        const setupDeviceManagerEvents = (editor) => {
+            editor.on('device:add', (model) => {
+                console.log('Device added:', model);
+            });
+
+            editor.on('device:remove', (model) => {
+                console.log('Device removed:', model);
+            });
+
+            editor.on('device:update', (model) => {
+                console.log('Device updated:', model);
+            });
+
+            return editor;
+        };
+        const setupStyleManager = (editor) => {
+            editor.StyleManager.addProperty('my-block', {
+                name: 'Background Color',
+                property: 'background-color',
+                type: 'color',
+                defaults: '#fff',
+            });
+
+            editor.StyleManager.addProperty('my-block', {
+                name: 'Font Size',
+                property: 'font-size',
+                type: 'select',
+                options: [
+                    { value: '12px', name: '12px' },
+                    { value: '16px', name: '16px' },
+                    { value: '20px', name: '20px' },
+                ],
+            });
+
+            return editor;
+        };
+        const setupTraitManager = (editor) => {
+            editor.TraitManager.addType('my-trait', {
+                createInput({ trait }) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = trait.target.getAttributes()[trait.name];
+                    input.addEventListener('input', () => {
+                        trait.target.setAttributes({ [trait.name]: input.value });
+                    });
+                    return input;
+                },
+            });
+
+            editor.TraitManager.addType('my-trait', {
+                label: 'My Trait',
+                name: 'my-trait',
+                changeProp: true,
+            });
+
+            return editor;
+        };
+        const setupSelectorManager = (editor) => {
+            editor.SelectorManager.addType('my-selector', {
+                createInput({ selector }) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = selector.get('name');
+                    input.addEventListener('input', () => {
+                        selector.set('name', input.value);
+                    });
+                    return input;
+                },
+            });
+
+            editor.SelectorManager.addType('my-selector', {
+                label: 'My Selector',
+                name: 'my-selector',
+                changeProp: true,
+            });
+
+            return editor;
+        };
+        const setupDeviceManager = (editor) => {
+            editor.DeviceManager.add('my-device', {
+                name: 'My Device',
+                width: '600px',
+                height: '800px',
+                widthMedia: '600px',
+                heightMedia: '800px',
+            });
+
+            editor.DeviceManager.add('my-device', {
+                label: 'My Device',
+                name: 'my-device',
+                changeProp: true,
+            });
+
+            return editor;
+        };
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const editor = setupEditor();
+            setupStorage(editor, 'local');
+            setupPanels(editor);
+            setupCommands(editor);
+            setupBlocks(editor);
+
+            editor.render();
+        });
+    </script>
+    <script src="./js/editor.js"></script>
+</body>
+
+</html>
