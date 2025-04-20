@@ -2,7 +2,7 @@ const editor = grapesjs.init({
     container: '#wcEditorCanvas',
     fromElement: true,
     width: 'auto',
-    height: '100vh',
+    height: '100%',
     storageManager: false,
     panels: { defaults: [] },
     layerManager: {
@@ -34,6 +34,70 @@ const editor = grapesjs.init({
             },
         ],
     },
+    selectorManager: {
+        appendTo: '.styles-container',
+    },
+    styleManager: {
+        appendTo: '.styles-container',
+        sectors: [
+            {
+                name: 'Dimension',
+                open: false,
+                // Use built-in properties
+                buildProps: ['width', 'min-height', 'padding'],
+                // Use `properties` to define/override single property
+                properties: [
+                    {
+                        // Type of the input,
+                        // options: integer | radio | select | color | slider | file | composite | stack
+                        type: 'integer',
+                        name: 'The width', // Label for the property
+                        property: 'width', // CSS property (if buildProps contains it will be extended)
+                        units: ['px', '%'], // Units, available only for 'integer' types
+                        defaults: 'auto', // Default value
+                        min: 0, // Min value, available only for 'integer' types
+                    },
+                ],
+            },
+            {
+                name: 'Extra',
+                open: false,
+                buildProps: ['background-color', 'box-shadow', 'custom-prop'],
+                properties: [
+                    {
+                        id: 'custom-prop',
+                        name: 'Custom Label',
+                        property: 'font-size',
+                        type: 'select',
+                        defaults: '32px',
+                        // List of options, available only for 'select' and 'radio'  types
+                        options: [
+                            { value: '12px', name: 'Tiny' },
+                            { value: '18px', name: 'Medium' },
+                            { value: '32px', name: 'Big' },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    traitManager: {
+        appendTo: '.traits-container',
+    },
+    deviceManager: {
+        devices: [
+            {
+                name: 'Desktop',
+                width: '', // default size
+            },
+            {
+                name: 'Mobile',
+                width: '320px', // this value will be used on canvas width
+                widthMedia: '480px', // this value will be used in CSS @media
+            },
+        ],
+    },
+
 });
 
 editor.Panels.addPanel({
@@ -48,20 +112,20 @@ editor.Panels.addPanel({
             id: 'visibility',
             active: true,
             className: 'btn-toggle-borders',
-            label: '<u>B</u>',
+            label: '<i class="fa fa-square-dashed"></i>',
             command: 'sw-visibility',
         },
         {
             id: 'export',
             className: 'btn-open-export',
-            label: 'Exp',
+            label: '<i class="fa fa-code"></i>',
             command: 'export-template',
             context: 'export-template',
         },
         {
             id: 'show-json',
             className: 'btn-show-json',
-            label: 'JSON',
+            label: '<i class="fa fa-code"></i>',
             context: 'show-json',
             command(editor) {
                 editor.Modal.setTitle('Components JSON')
@@ -95,18 +159,54 @@ editor.Panels.addPanel({
         {
             id: 'show-layers',
             active: true,
-            label: 'Layers',
+            label: '<i class="fa fa-layer-group"></i>',
             command: 'show-layers',
             togglable: false,
         },
         {
             id: 'show-style',
             active: true,
-            label: 'Styles',
+            label: '<i class="fa fa-paintbrush"></i>',
             command: 'show-styles',
             togglable: false,
         },
+        {
+            id: 'show-traits',
+            active: true,
+            label: '<i class="fa fa-user-gear"></i>',
+            command: 'show-traits',
+            togglable: false,
+        },
     ],
+});
+editor.Panels.addPanel({
+    id: 'panel-devices',
+    el: '.panel__devices',
+    buttons: [
+        {
+            id: 'device-desktop',
+            label: '<i class="fa fa-desktop"></i>',
+            command: 'set-device-desktop',
+            active: true,
+            togglable: false,
+        },
+        {
+            id: 'device-mobile',
+            label: '<i class="fa fa-mobile"></i>',
+            command: 'set-device-mobile',
+            togglable: false,
+        },
+    ],
+});
+editor.Commands.add('export-template', {
+    run(editor, sender) {
+        const code = editor.getHtml() + '\n' + editor.getCss();
+        editor.Modal.setTitle('Export template')
+            .setContent(
+                `<textarea style="width:100%; height: 250px;">${code}</textarea>`,
+            )
+            .open();
+    },
 });
 
 editor.Commands.add('show-layers', {
@@ -126,16 +226,6 @@ editor.Commands.add('show-layers', {
         lmEl.style.display = 'none';
     },
 });
-editor.Commands.add('export-template', {
-    run(editor, sender) {
-        const code = editor.getHtml() + '\n' + editor.getCss();
-        editor.Modal.setTitle('Export template')
-            .setContent(
-                `<textarea style="width:100%; height: 250px;">${code}</textarea>`,
-            )
-            .open();
-    },
-});
 editor.Commands.add('show-styles', {
     getRowEl(editor) {
         return editor.getContainer().closest('.editor-row');
@@ -152,4 +242,22 @@ editor.Commands.add('show-styles', {
         const smEl = this.getStyleEl(this.getRowEl(editor));
         smEl.style.display = 'none';
     },
+});
+editor.Commands.add('show-traits', {
+    getTraitsEl(editor) {
+        const row = editor.getContainer().closest('.editor-row');
+        return row.querySelector('.traits-container');
+    },
+    run(editor, sender) {
+        this.getTraitsEl(editor).style.display = '';
+    },
+    stop(editor, sender) {
+        this.getTraitsEl(editor).style.display = 'none';
+    },
+});
+editor.Commands.add('set-device-desktop', {
+    run: (editor) => editor.setDevice('Desktop'),
+});
+editor.Commands.add('set-device-mobile', {
+    run: (editor) => editor.setDevice('Mobile'),
 });

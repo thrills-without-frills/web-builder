@@ -1,40 +1,47 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>WebCraft</title>
 
-        <link rel="stylesheet" href="css/studio/mobile.css" media="only screen and (max-width: 767px)">
-        <link rel="stylesheet" href="css/studio/tablet.css" media="only screen and (min-width: 768px) and (max-width: 1023px)">
-        <link rel="stylesheet" href="css/studio/desktop.css" media="only screen and (min-width: 1024px)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebCraft</title>
 
-        <meta name="description" content="A brief description of your page, up to 160 characters.">
-        <meta name="keywords" content="keyword1, keyword2, keyword3">
-        <meta name="author" content="Your Name or Company">
-        <meta name="robots" content="index, follow">
-        <link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css" />
-        <link rel="stylesheet" href="css/studio/base.css" />
-        <link rel="stylesheet" href="css/studio/theme.css" />
-        <style>
-            #wcEditorContainer {
-                display: flex;
-                flex-direction: row;
-                height: 100vh;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="panel__top">
-            <div class="panel__basic-actions"></div>
-            <div class="panel__switcher"></div>
-        </div>
-        <div id="wcEditorContainer">
-            <div id="wcEditorBlocks"></div>
-            <div id="wcEditorCanvas">
-                <h1>WebCraft</h1>
+    <link rel="stylesheet" href="css/studio/mobile.css" media="only screen and (max-width: 767px)">
+    <link rel="stylesheet" href="css/studio/tablet.css"
+        media="only screen and (min-width: 768px) and (max-width: 1023px)">
+    <link rel="stylesheet" href="css/studio/desktop.css" media="only screen and (min-width: 1024px)">
+
+    <meta name="description" content="A brief description of your page, up to 160 characters.">
+    <meta name="keywords" content="keyword1, keyword2, keyword3">
+    <meta name="author" content="Your Name or Company">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css" />
+    <link rel="stylesheet" href="css/studio/base.css" />
+    <link rel="stylesheet" href="css/studio/theme.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #wcEditorContainer {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="panel__top">
+        <div class="panel__basic-actions"></div>
+        <div class="panel__devices"></div>
+        <div class="panel__switcher"></div>
+    </div>
+    <div id="wcEditorContainer">
+        <div id="wcEditorBlocks"></div>
+        <div class="editor-row">
+            <div class="editor-canvas">
+                <div id="wcEditorCanvas">
+                    <h1>WebCraft</h1>
+                </div>
             </div>
             <div class="panel__right">
                 <div class="layers-container"></div>
@@ -42,8 +49,10 @@
                 <div class="traits-container"></div>
             </div>
         </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//unpkg.com/grapesjs"></script>
+    <script src="js/studio/main.js"></script>
+</body>
 
-        <script src="//unpkg.com/grapesjs"></script>
-        <script src="js/studio/main.js"></script>
-    </body>
 </html>

@@ -29,8 +29,8 @@
 }
 
 .gjs-blocks-c {
-    display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     gap: var(--gjs-flex-item-gap);
     margin: 0;
     padding: var(--spacing-2);
@@ -68,7 +68,7 @@
     justify-content: flex-start;
     align-items: stretch;
     flex-wrap: nowrap;
-    height: 300px;
+    width: 100%;
 }
 
 .editor-canvas {
@@ -84,3 +84,10 @@
 
 
 /* Style Manager */
+
+
+
+/* Device Manager */
+.panel__devices {
+    position: initial;
+  }
