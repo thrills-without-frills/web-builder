@@ -1,0 +1,453 @@
+/* --- CSS Custom Properties --- */
+:root {
+    /* Colors */
+    --primary-bg-color: #f4f7f6;
+    --secondary-bg-color: #ffffff;
+    --text-color: #333;
+    --border-color: #ddd;
+    --sidebar-bg-color-left: #eef2f7; /* Light blueish */
+    --sidebar-bg-color-right: #f8f8f8; /* Very light grey */
+    --graph-paper-line-color: rgba(173, 216, 230, 0.4); /* Light blue with opacity */
+    --handle-color: rgba(0, 0, 0, 0.1); /* Subtle handle color */
+
+    /* Sizes */
+    --header-height-expanded: 60px;
+    --header-height-collapsed: 10px; /* Just enough for the toggle */
+    --footer-height-expanded: 40px;
+    --footer-height-collapsed: 10px; /* Just enough for the toggle */
+    --left-sidebar-width-expanded: 250px;
+    --left-sidebar-width-collapsed: 60px; /* Enough for icons */
+    --left-sidebar-handle-size: 20px; /* Size of drag handle when detached */
+    --right-sidebar-min-width: 200px;
+    --right-sidebar-max-width: 400px;
+    --right-sidebar-handle-width: 8px; /* Width of resize handle */
+    --icon-size: 20px;
+    --padding-base: 15px;
+    --margin-base: 10px;
+
+    /* Transitions */
+    --transition-duration: 0.3s;
+    --transition-timing-function: ease-in-out;
+
+    /* Z-index */
+    --detached-z-index: 1000;
+    --resizing-z-index: 1010;
+    --dragging-z-index: 1020;
+    --handle-z-index: 5; /* Needs to be above sidebar content */
+
+    /* Graph Paper Background */
+    --graph-paper-grid-size: 15px;
+    --graph-paper-image: repeating-linear-gradient(to right, var(--graph-paper-line-color) 1px, transparent 1px calc(var(--graph-paper-grid-size) - 1px)),
+                         repeating-linear-gradient(to bottom, var(--graph-paper-line-color) 1px, transparent 1px calc(var(--graph-paper-grid-size) - 1px));
+}
+
+.graph-paper {
+    background-image: var(--graph-paper-image);
+    background-size: var(--graph-paper-grid-size) var(--graph-paper-grid-size);
+    background-repeat: repeat;
+    background-color: var(--sidebar-bg-color-right); /* Ensure color is beneath the image */
+}
+
+/* --- Global Styles --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: var(--primary-bg-color);
+    color: var(--text-color);
+    overflow: hidden; /* Prevent main scrollbars on the body */
+    display: flex; /* Use flex to manage the app-container */
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column; /* Header, Central, Footer Stack vertically */
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Important for layout */
+}
+
+/* --- Header --- */
+.app-header {
+    background-color: var(--secondary-bg-color);
+    border-bottom: 1px solid var(--border-color);
+    height: var(--header-height-expanded);
+    transition: height var(--transition-duration) var(--transition-timing-function);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--padding-base);
+    flex-shrink: 0; /* Prevent shrinking */
+    position: relative; /* For toggle button positioning when collapsed */
+    overflow: hidden; /* Hide content when collapsed */
+    z-index: 1; /* Ensure it's above central layout */
+}
+
+.header-content {
+    flex-grow: 1;
+    opacity: 1;
+    transition: opacity var(--transition-duration) var(--transition-timing-function);
+}
+
+.app-header.collapsed {
+    height: var(--header-height-collapsed);
+    padding: 0; /* Remove padding when collapsed */
+}
+
+.app-header.collapsed .header-content {
+     opacity: 0;
+     pointer-events: none; /* Disable interaction with hidden content */
+}
+
+.header-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--icon-size);
+    color: var(--text-color);
+    padding: 0;
+    transition: transform var(--transition-duration) var(--transition-timing-function);
+}
+
+.app-header.collapsed .header-toggle {
+     position: absolute;
+     top: 0;
+     right: 0;
+     transform: rotate(180deg); /* Point down when collapsed */
+     padding: 0 var(--padding-base); /* Add back some padding for click area */
+}
+
+
+/* --- Central Layout Area --- */
+.central-layout {
+    display: flex; /* Sidebars and Main are side-by-side */
+    flex-grow: 1; /* Fill available vertical space */
+    overflow: hidden; /* Prevent main layout scrollbars */
+}
+
+/* --- Sidebars (Common Styles) --- */
+.app-sidebar {
+    background-color: var(--secondary-bg-color);
+    border-right: 1px solid var(--border-color); /* Default border */
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* Prevent shrinking by default */
+    transition: width var(--transition-duration) var(--transition-timing-function),
+                min-width var(--transition-duration) var(--transition-timing-function),
+                transform var(--transition-duration) var(--transition-timing-function),
+                left var(--transition-duration) var(--transition-timing-function), /* for detached transition */
+                top var(--transition-duration) var(--transition-timing-function); /* for detached transition */
+    overflow: hidden; /* Manage content overflow */
+    position: relative; /* Needed for handles */
+}
+
+.sidebar-header {
+    padding: var(--padding-base);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: normal;
+}
+
+.sidebar-content {
+    padding: var(--padding-base);
+    overflow-y: auto; /* Scroll sidebar content if needed */
+    flex-grow: 1;
+}
+
+/* --- Left Sidebar Specific --- */
+.left-sidebar {
+    width: var(--left-sidebar-width-expanded);
+    background-color: var(--sidebar-bg-color-left);
+    border-right: 1px solid var(--border-color);
+}
+
+.left-sidebar .sidebar-header h2 {
+    opacity: 1;
+     transition: opacity var(--transition-duration);
+}
+
+.left-sidebar.collapsed {
+    width: var(--left-sidebar-width-collapsed);
+}
+
+.left-sidebar.collapsed .sidebar-header h2 {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.left-sidebar.collapsed .sidebar-nav {
+    /* Hide text labels, keep icons */
+}
+
+.left-sidebar.collapsed .nav-text {
+    display: none; /* Hide text */
+}
+
+.left-sidebar.collapsed .sidebar-header {
+    /* Center content if needed */
+    justify-content: center;
+}
+
+.left-sidebar.collapsed .detach-btn {
+    display: none; /* Hide detach button when collapsed */
+}
+
+
+.left-sidebar .detach-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--icon-size) * 0.8;
+    color: var(--text-color);
+    padding: 0;
+    margin-left: var(--margin-base);
+}
+
+.left-sidebar .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.left-sidebar .nav-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    padding: var(--padding-base);
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: background-color var(--transition-duration);
+}
+
+.left-sidebar .nav-item i {
+    margin-right: var(--margin-base);
+    font-size: var(--icon-size);
+    width: var(--icon-size); /* Ensure icon takes fixed space */
+    text-align: center;
+}
+
+.left-sidebar .nav-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.left-sidebar.collapsed .nav-item {
+     justify-content: center; /* Center icon when collapsed */
+}
+
+.left-sidebar.collapsed .nav-item i {
+     margin-right: 0; /* No margin when only icon is visible */
+}
+.left-sidebar .nav-item.active {
+    background-color: rgba(0, 0, 0, 0.1); /* Highlight color */
+    font-weight: bold;
+}
+
+
+/* Left Sidebar Detached State */
+.left-sidebar.detached {
+    position: absolute;
+    top: 50px; /* Example default detached position */
+    left: 50px;
+    height: auto; /* Auto height based on content */
+    width: var(--left-sidebar-width-expanded); /* Retain expanded width when detached */
+    z-index: var(--detached-z-index);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+}
+
+.left-sidebar.detached .left-sidebar-handle {
+    /* Handle to drag the whole detached sidebar */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height-expanded); /* Use header height for handle area */
+    cursor: grab;
+    z-index: var(--handle-z-index);
+}
+
+.left-sidebar.detached .left-sidebar-handle:active {
+    cursor: grabbing;
+}
+
+/* Hide layout-specific handles when attached */
+.left-sidebar:not(.detached) .left-sidebar-handle {
+    display: none;
+}
+
+
+/* --- Right Sidebar Specific --- */
+.right-sidebar {
+    width: var(--right-sidebar-min-width); /* Default width */
+    min-width: var(--right-sidebar-min-width); /* Enforce min-width */
+    max-width: var(--right-sidebar-max-width); /* Enforce max-width */
+    background-color: var(--sidebar-bg-color-right);
+    border-left: 1px solid var(--border-color); /* Border on the left side */
+    border-right: none; /* No border on the right */
+    position: relative; /* Needed for handle */
+    /* Apply graph paper background */
+    background-image: var(--graph-paper-image);
+    background-size: var(--graph-paper-grid-size) var(--graph-paper-grid-size);
+    background-repeat: repeat;
+    /* Ensure background color is beneath the image */
+    background-color: var(--sidebar-bg-color-right);
+    /* If blend modes are needed */
+    /* background-blend-mode: multiply; */ /* Example, adjust as needed */
+
+    /* Prevent content from overflowing during resize */
+    overflow: hidden;
+}
+
+/* Right sidebar handle for resizing */
+.right-sidebar-handle {
+    position: absolute;
+    top: 0;
+    left: 0; /* Position handle on the left edge */
+    bottom: 0;
+    width: var(--right-sidebar-handle-width); /* Thin handle */
+    cursor: ew-resize; /* Horizontal resize cursor */
+    z-index: var(--handle-z-index);
+    /* Optional visual indicator for the handle */
+    /* background-color: var(--handle-color); */
+}
+
+/* Give visual feedback when dragging handle */
+.right-sidebar.resizing .right-sidebar-handle {
+     background-color: rgba(0, 0, 0, 0.2); /* Make handle more visible when resizing */
+}
+
+
+/* Layout adjustment when Left Sidebar is detached */
+/* Target the central-layout container when left sidebar is detached */
+.left-sidebar.detached ~ .main-content {
+    /* If main-content is flex-grow 1, it will expand automatically.
+       No specific styles needed here unless main-content is fixed width. */
+}
+
+/* This rule is less common in flexbox/grid unless main-content is fixed.
+   The flex-grow on main and min/max width on right sidebar usually handle this.
+.left-sidebar.detached ~ .right-sidebar {
+    max-width: calc(100% - var(--right-sidebar-min-width)); // Example: Occupy space up to max-width
+}
+*/
+
+
+/* --- Main Content --- */
+.main-content {
+    flex-grow: 1; /* Fill remaining horizontal space */
+    padding: var(--padding-base);
+    overflow-y: auto; /* Add scrollbar if content exceeds height */
+}
+
+
+/* --- Footer --- */
+.app-footer {
+    background-color: var(--secondary-bg-color);
+    border-top: 1px solid var(--border-color);
+    height: var(--footer-height-expanded);
+    transition: height var(--transition-duration) var(--transition-timing-function);
+    display: flex;
+    justify-content: center; /* Center copyright */
+    align-items: center;
+    padding: 0 var(--padding-base);
+    flex-shrink: 0; /* Prevent shrinking */
+    position: relative; /* For toggle button positioning when collapsed */
+    overflow: hidden; /* Hide content when collapsed */
+    z-index: 1; /* Ensure it's above central layout */
+}
+
+.footer-content {
+     flex-grow: 1;
+     text-align: center; /* Ensure centered text even with flex-grow */
+     opacity: 1;
+     transition: opacity var(--transition-duration) var(--transition-timing-function);
+}
+
+.app-footer.collapsed {
+    height: var(--footer-height-collapsed);
+    padding: 0; /* Remove padding when collapsed */
+}
+
+.app-footer.collapsed .footer-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.footer-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--icon-size);
+    color: var(--text-color);
+    padding: 0;
+     transition: transform var(--transition-duration) var(--transition-timing-function);
+}
+
+.app-footer.collapsed .footer-toggle {
+     position: absolute;
+     bottom: 0;
+     right: 0;
+     transform: rotate(180deg); /* Point up when collapsed */
+      padding: 0 var(--padding-base); /* Add back some padding for click area */
+}
+
+
+/* --- Reset Button (Example Positioning) --- */
+.reset-layout-btn {
+    position: fixed;
+    bottom: var(--padding-base);
+    left: var(--padding-base);
+    padding: calc(var(--padding-base) * 0.5) var(--padding-base);
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 100; /* Ensure it's visible */
+    font-size: 0.9em;
+}
+
+.reset-layout-btn i {
+    margin-right: 5px;
+}
+
+.reset-layout-btn:hover {
+    background-color: #0056b3;
+}
+
+/* --- General Utility/State Classes --- */
+.dragging {
+    user-select: none; /* Prevent text selection during drag */
+    z-index: var(--dragging-z-index);
+    cursor: grabbing !important;
+}
+
+.resizing {
+     user-select: none; /* Prevent text selection during resize */
+     z-index: var(--resizing-z-index);
+}
+
+/* Styling for the expand icons when collapsed */
+/* Header toggle icon points down when header is expanded, up when collapsed */
+.app-header .header-toggle i { transform: rotate(0deg); }
+.app-header.collapsed .header-toggle i { transform: rotate(180deg); }
+
+/* Footer toggle icon points up when footer is expanded, down when collapsed */
+.app-footer .footer-toggle i { transform: rotate(180deg); }
+.app-footer.collapsed .footer-toggle i { transform: rotate(0deg); }

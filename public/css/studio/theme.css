@@ -1,0 +1,109 @@
+:root {
+    --gjs-main-color: #444;
+    --gjs-primary-color: #444;
+    --gjs-secondary-color: #ddd;
+    --gjs-tertiary-color: #804f7b;
+    --gjs-quaternary-color: #d278c9;
+
+    /*
+    --gjs-left-width: 15%;
+    --gjs-canvas-top: 40px;
+    */
+    --gjs-canvas-top: 0px;
+    --gjs-left-width: 0px;
+
+    --gjs-font-color: #ddd;
+    --gjs-font-color-active: #f8f8f8;
+
+    --gjs-main-dark-color: rgba(0, 0, 0, 0.2);
+    --gjs-secondary-dark-color: rgba(0, 0, 0, 0.1);
+    --gjs-main-light-color: rgba(255, 255, 255, 0.1);
+    --gjs-secondary-light-color: rgba(255, 255, 255, 0.7);
+
+    --gjs-soft-light-color: rgba(255, 255, 255, 0.015);
+    --gjs-color-blue: #3b97e3;
+    --gjs-color-red: #dd3636;
+    --gjs-color-yellow: #ffca6f;
+    --gjs-color-green: #62c462;
+    --gjs-color-highlight: #71b7f1;
+    --gjs-color-warn: #ffca6f;
+
+    --gjs-handle-margin: -5px;
+    --gjs-light-border: rgba(255, 255, 255, 0.05);
+    --gjs-arrow-color: rgba(255, 255, 255, 0.7);
+    --gjs-dark-text-shadow: rgba(0, 0, 0, 0.2);
+    --gjs-color-input-padding: 22px;
+    --gjs-input-padding: 5px;
+    --gjs-padding-elem-classmanager: 5px 6px;
+    --gjs-upload-padding: 150px 10px;
+    --gjs-animation-duration: 0.2s;
+    --gjs-main-font: Helvetica, sans-serif;
+    --gjs-font-size: 0.75rem;
+    --gjs-placeholder-background-color: var(--gjs-color-green);
+    --gjs-flex-item-gap: 5px;
+
+    --gjs-editor-box-shadow: 0 0 12px 6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.5);
+
+    --font-family-segoe: "Segoe UI Web (West European)",Segoe UI,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    --font-family-tahoha: Tahoma, Geneva, sans-serif;
+    --font-family-roboto: Roboto, Helvetica Neue, sans-serif;
+
+    --spacing-0: 0rem;
+    --spacing-0-5: 0.125rem;
+    --spacing-1: 0.25rem;
+    --spacing-1-5: 0.375rem;
+    --spacing-2: 0.5rem;
+    --spacing-2-5: 0.625rem;
+    --spacing-3: 0.75rem;
+    --spacing-3-5: 0.875rem;
+    --spacing-4: 1rem;
+    --spacing-5: 1.25rem;
+    --spacing-6: 1.5rem;
+    --spacing-7: 1.75rem;
+    --spacing-8: 2rem;
+    --spacing-9: 2.25rem;
+    --spacing-10: 2.5rem;
+    --spacing-11: 2.75rem;
+    --spacing-12: 3rem;
+    --spacing-14: 3.5rem;
+    --spacing-16: 4rem;
+
+    --box-shadow-none: none;
+    --box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --box-shadow-md: 0 2px 4px 0 rgba(0,0,0,0.2), 0 4px 6px -1px rgba(0,0,0,0.2);
+    --box-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -4px rgba(0,0,0,0.2);
+    --box-shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.2), 0 10px 10px -6px rgba(0,0,0,0.2);
+    --box-shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.2);
+    --box-shadow-0: 0 0 5px rgba(0, 0, 0, 0.2);
+    --box-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --box-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    --box-shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    --box-shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    --box-shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+    --box-shadow-6: 0 27px 55px rgba(0, 0, 0, 0.30), 0 17px 17px rgba(0, 0, 0, 0.15);
+    --box-shadow-7: 0 36px 74px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15);
+    --box-shadow-8: 0 45px 94px rgba(0, 0, 0, 0.20), 0 25px 25px rgba(0, 0, 0, 0.15);
+
+    --m-box-shadow-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    --m-box-shadow-3: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+    --m-box-shadow-6: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);
+    --m-box-shadow-12: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+    --m-box-shadow-24: 0px 13px 40px 0px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+
+
+    --b-box-shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, .075);
+    --b-box-shadow-md: 0 .5rem 1rem rgba(0, 0, 0, .15); /* Default */
+    --b-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, .175);
+    --b-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, .075);
+
+    --t-box-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --t-box-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --t-box-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --t-box-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --t-box-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --t-box-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+    --t-box-shadow-outline: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    --t-box-shadow-none: none;
+
+
+}

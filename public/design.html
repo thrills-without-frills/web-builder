@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Components</title>
+    <style>
+        :root {
+            --color-primary: #007bff;
+            --color-secondary: #28a745;
+            --color-accent: #ffc107;
+            --color-neutral-dark: #343a40;
+            --color-neutral-mid: #555;
+            --color-neutral-light: #e9ecef;
+            --color-neutral-lighter: #f8f9fa;
+            --color-neutral-border: #ddd;
+            --color-white: #fff;
+            --color-text-base: #333;
+            --color-text-light: #adb5bd;
+
+            --space-px: 0.0625rem;
+            --space-0: 0;
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+
+            --border-radius-sm: 0.25rem;
+            --border-radius-md: 0.3125rem;
+            --border-radius-lg: 0.5rem;
+
+            --box-shadow-sm: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
+            --box-shadow-md: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+
+            --font-family-base: sans-serif;
+            --font-family-tahoma: 'Tahoma', sans-serif;
+            
+
+            --line-height-base: 1.6;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            line-height: var(--line-height-base);
+            margin: var(--space-0);
+            background-color: var(--color-neutral-light);
+            color: var(--color-text-base);
+        }
+        .container {
+            max-width: 1000px;
+            margin: var(--space-0) auto;
+            padding: var(--space-0) var(--space-5);
+        }
+        .component-section {
+            background-color: var(--color-white);
+            padding: var(--space-8) var(--space-5);
+            margin-bottom: var(--space-8);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-md);
+        }
+        .component-section h2 {
+            color: var(--color-primary);
+            margin-top: var(--space-0);
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: var(--space-3);
+            margin-bottom: var(--space-5);
+        }
+
+        .offer-card {
+            border: 1px solid var(--color-neutral-border);
+            padding: var(--space-4);
+            margin-top: var(--space-4);
+            border-radius: var(--border-radius-md);
+            background-color: #e9f7ef;
+        }
+        .offer-card header h3 {
+            color: var(--color-secondary);
+            margin-top: var(--space-0);
+        }
+        .offer-card figure {
+            margin: var(--space-4) var(--space-0);
+            text-align: center;
+        }
+        .offer-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-sm);
+        }
+        .offer-card figcaption {
+            font-style: italic;
+            color: var(--color-neutral-mid);
+            margin-top: var(--space-2);
+        }
+        .offer-card .offer-details ul {
+            list-style: disc inside;
+            padding-left: var(--space-0);
+        }
+        .offer-card footer {
+            margin-top: var(--space-5);
+            text-align: right;
+        }
+        .offer-card .button {
+            display: inline-block;
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            padding: var(--space-3) var(--space-4);
+            text-decoration: none;
+            border-radius: var(--border-radius-md);
+            transition: background-color 0.3s ease;
+        }
+        .offer-card .button:hover {
+            background-color: #218838;
+        }
+        .offer-card footer small {
+            display: block;
+            margin-top: var(--space-3);
+            color: var(--color-neutral-mid);
+        }
+
+        .site-address {
+            font-style: normal;
+            border: 1px solid var(--color-neutral-border);
+            padding: var(--space-4);
+            margin-top: var(--space-4);
+            border-radius: var(--border-radius-md);
+            background-color: var(--color-neutral-light);
+            line-height: var(--line-height-base);
+        }
+        .site-address a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+         .site-address a:hover {
+            text-decoration: underline;
+        }
+
+        .main-navigation {
+            background-color: var(--color-primary);
+            padding: var(--space-3) var(--space-0);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--space-8);
+        }
+        .main-navigation ul {
+            list-style: none;
+            padding: var(--space-0);
+            margin: var(--space-0);
+            display: flex;
+            justify-content: center;
+            gap: var(--space-5);
+            flex-wrap: wrap;
+        }
+        .main-navigation li {
+            display: inline;
+        }
+        .main-navigation a {
+            color: var(--color-white);
+            text-decoration: none;
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--border-radius-sm);
+            transition: background-color 0.3s ease;
+        }
+        .main-navigation a:hover,
+        .main-navigation a:focus {
+            background-color: #0056b3;
+        }
+        .main-navigation a[aria-current="page"] {
+             font-weight: bold;
+             border-bottom: 2px solid var(--color-white);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://placehold.co/1200x400/333/fff?text=Hero+Image') no-repeat center center/cover;
+            color: var(--color-white);
+            text-align: center;
+            padding: var(--space-20) var(--space-5);
+            margin-bottom: var(--space-8);
+            border-radius: var(--border-radius-lg);
+        }
+        .hero-section h1 {
+            font-size: 2.5em;
+            margin-top: var(--space-0);
+            margin-bottom: var(--space-4);
+        }
+        .hero-section p {
+            font-size: 1.2em;
+            margin-bottom: var(--space-8);
+        }
+        .hero-section .button {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: var(--color-text-base);
+            padding: var(--space-3) var(--space-6);
+            text-decoration: none;
+            border-radius: var(--border-radius-md);
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+        .hero-section .button:hover {
+            background-color: #e0a800;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-5);
+            margin-top: var(--space-5);
+        }
+        .feature-item {
+            background-color: var(--color-neutral-lighter);
+            padding: var(--space-5);
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            box-shadow: var(--box-shadow-sm);
+        }
+        .feature-item h3 {
+            color: var(--color-primary);
+            margin-top: var(--space-0);
+        }
+
+        .testimonial-item {
+            font-style: italic;
+            margin-top: var(--space-5);
+        }
+        .testimonial-item figure {
+            margin: var(--space-0);
+        }
+        .testimonial-item blockquote {
+            margin: var(--space-0) var(--space-0) var(--space-3) var(--space-0);
+            padding: var(--space-4);
+            background-color: var(--color-neutral-light);
+            border-left: 5px solid var(--color-primary);
+            border-radius: var(--space-0) var(--border-radius-md) var(--border-radius-md) var(--space-0);
+        }
+        .testimonial-item figcaption {
+            text-align: right;
+            color: var(--color-neutral-mid);
+            font-style: normal;
+        }
+
+        .site-footer {
+            background-color: var(--color-neutral-dark);
+            color: var(--color-white);
+            padding: var(--space-8) var(--space-5);
+            text-align: center;
+            margin-top: var(--space-8);
+        }
+        .site-footer nav ul {
+            list-style: none;
+            padding: var(--space-0);
+            margin: var(--space-0) var(--space-0) var(--space-5) var(--space-0);
+            display: flex;
+            justify-content: center;
+            gap: var(--space-5);
+            flex-wrap: wrap;
+        }
+        .site-footer nav a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .site-footer nav a:hover {
+            color: var(--color-white);
+        }
+        .site-footer p {
+            margin: var(--space-0);
+            font-size: 0.9em;
+            color: var(--color-text-light);
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: var(--space-px);
+            height: var(--space-px);
+            margin: calc(var(--space-px) * -1);
+            padding: var(--space-0);
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: var(--space-0);
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-navigation" aria-label="Main Site Navigation">
+        <h3 class="visually-hidden">Main Site Navigation</h3>
+        <ul>
+            <li><a href="/" aria-current="page">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section class="hero-section">
+            <h1>Welcome to Our Amazing Website!</h1>
+            <p>Discover how we can help you achieve your goals with our innovative solutions.</p>
+            <a href="/learn-more" class="button">Learn More</a>
+        </section>
+
+        <div class="component-section">
+            <h2>Our Key Features</h2>
+            <div class="features-grid">
+                <article class="feature-item">
+                    <h3>Feature One</h3>
+                    <p>Brief description of the first key feature and its benefit to the user.</p>
+                </article>
+                <article class="feature-item">
+                    <h3>Feature Two</h3>
+                    <p>Brief description of the second key feature and its benefit to the user.</p>
+                </article>
+                <article class="feature-item">
+                    <h3>Feature Three</h3>
+                    <p>Brief description of the third key feature and its benefit to the user.</p>
+                </article>
+                <article class="feature-item">
+                    <h3>Feature Four</h3>
+                    <p>Brief description of the fourth key feature and its benefit to the user.</p>
+                </article>
+            </div>
+        </div>
+
+        <div class="component-section">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonial-item">
+                <figure>
+                    <blockquote>
+                        <p>"This service has completely transformed the way we do business. Highly recommended!"</p>
+                    </blockquote>
+                    <figcaption>&mdash; Jane Doe, Happy Customer</figcaption>
+                </figure>
+            </div>
+            </div>
+
+        <div class="component-section">
+            <h2>Offer Card Example</h2>
+            <article class="offer-card">
+                <header>
+                    <h3>Special Summer Discount!</h3>
+                    <p>Don't miss out on our limited-time offer.</p>
+                </header>
+                <figure>
+                    <img src="https://placehold.co/600x200/e9f7ef/28a745?text=Summer+Offer" alt="Placeholder image depicting a summer sale with beach elements">
+                    <figcaption>Up to 30% off on selected items.</figcaption>
+                </figure>
+                <section class="offer-details">
+                    <h4>Details:</h4>
+                    <p>Get amazing discounts on all our summer collection clothing and accessories. Valid until August 31st.</p>
+                    <ul>
+                        <li>Item 1 Discount: 20%</li>
+                        <li>Item 2 Discount: 30%</li>
+                        <li>Item 3 Discount: Buy one, get one free</li>
+                    </ul>
+                </section>
+                <footer>
+                    <a href="/shop/summer-collection" class="button">Shop Now</a>
+                    <p><small>Terms and conditions apply.</small></p>
+                </footer>
+            </article>
+        </div>
+
+        <div class="component-section">
+            <h2>Address Component Example</h2>
+            <address class="site-address">
+                <strong>Your Company Name</strong><br>
+                123 Business Street<br>
+                Suite 400<br>
+                Business City, BC 12345<br>
+                Canada<br>
+                Phone: <a href="tel:+1-555-123-4567">+1-555-123-4567</a><br>
+                Email: <a href="mailto:info@yourcompany.com">info@yourcompany.com</a><br>
+                <a href="/contact">Get in Touch</a>
+            </address>
+        </div>
+
+    </div> <footer class="site-footer">
+        <nav aria-label="Footer Navigation">
+             <h3 class="visually-hidden">Footer Navigation</h3>
+            <ul>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/terms">Terms of Service</a></li>
+                <li><a href="/sitemap">Sitemap</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+        </nav>
+        <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+        </footer>
+
+</body>
+</html>

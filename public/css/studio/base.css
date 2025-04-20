@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#wcEditorCanvas {
+    flex: 1;
+    padding: var(--spacing-4);
+}
+
+.gjs-editor {
+    box-shadow: var(--gjs-editor-box-shadow);
+}
+
+.gjs-cv-canvas {
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Blocks */
+#wcEditorBlocks {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gjs-flex-item-gap);
+    margin: 0;
+    background-color: var(--gjs-primary-color);
+}
+
+.gjs-blocks-c {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gjs-flex-item-gap);
+    margin: 0;
+    padding: var(--spacing-2);
+    background-color: var(--gjs-primary-color);
+}
+
+.gjs-block {
+    width: auto;
+    height: auto;
+    min-height: auto;
+}
+
+
+/* Panel Top */
+.panel__top {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    position: initial;
+    justify-content: space-between;
+}
+
+.panel__basic-actions {
+    position: initial;
+}
+
+/* Panel Right */
+.panel__switcher {
+    position: initial;
+}
+
+/* Layers Manager */
+.editor-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    height: 300px;
+}
+
+.editor-canvas {
+    flex-grow: 1;
+}
+
+.panel__right {
+    flex-basis: 230px;
+    position: relative;
+    overflow-y: auto;
+    background-color: var(--gjs-primary-color);
+}
+
+
+/* Style Manager */

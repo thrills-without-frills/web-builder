@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Modular Layout</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="app-container" class="app-container">
+
+        <header id="app-header" class="app-header">
+            <div class="header-content">
+                <h1>My App Title</h1>
+            </div>
+            <button class="toggle-btn header-toggle" aria-label="Toggle Header">
+                <i class="fas fa-chevron-up"></i>
+            </button>
+        </header>
+
+        <div id="central-layout" class="central-layout">
+
+            <aside id="left-sidebar" class="app-sidebar left-sidebar">
+                <div class="sidebar-header">
+                    <h2>Menu</h2>
+                    <button class="detach-btn" aria-label="Detach Sidebar">
+                        <i class="fas fa-arrows-alt"></i>
+                    </button>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><button class="nav-item" aria-label="Dashboard"><i class="fas fa-home"></i> <span class="nav-text">Dashboard</span></button></li>
+                        <li><button class="nav-item" aria-label="Settings"><i class="fas fa-cog"></i> <span class="nav-text">Settings</span></button></li>
+                        <li><button class="nav-item" aria-label="Profile"><i class="fas fa-user"></i> <span class="nav-text">Profile</span></button></li>
+                        <li><button class="nav-item" aria-label="Reports"><i class="fas fa-chart-bar"></i> <span class="nav-text">Reports</span></button></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-handle left-sidebar-handle"></div> </aside>
+
+            <main id="main-content" class="main-content">
+                <h2>Main Content Area</h2>
+                <p>This section expands and contracts based on the state of the header, footer, and sidebars. It contains the primary information and controls for the application.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </main>
+
+            <aside id="right-sidebar" class="app-sidebar right-sidebar">
+                 <div class="sidebar-header">
+                    <h2>Details</h2>
+                </div>
+                <div class="sidebar-content">
+                    <p>This sidebar is resizable. Grab its left edge to change its width within defined limits.</p>
+                    <p>It has a light grey background with a subtle light blue graph paper overlay.</p>
+                    <div style="height: 200px; background: rgba(0,0,0,0.05); margin-top: 20px;"></div>
+                </div>
+                <div class="sidebar-handle right-sidebar-handle" aria-label="Resize Sidebar"></div> </aside>
+
+        </div>
+
+        <footer id="app-footer" class="app-footer">
+             <div class="footer-content">
+                <p>&copy; 2023 My App. All rights reserved.</p>
+             </div>
+            <button class="toggle-btn footer-toggle" aria-label="Toggle Footer">
+                 <i class="fas fa-chevron-down"></i>
+            </button>
+        </footer>
+
+        <button id="reset-layout-btn" class="reset-layout-btn" title="Reset Layout">
+             <i class="fas fa-sync-alt"></i> Reset Layout
+        </button>
+
+    </div>
+
+    <script src="js/layout.js"></script>
+</body>
+</html>
