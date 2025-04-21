@@ -16,9 +16,9 @@ const editor = grapesjs.init({
                 label: '<b>Section</b>',
                 attributes: { class: 'gjs-block-section' },
                 content: `<section>
-              <h1>This is a simple title</h1>
-              <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
-            </section>`,
+                    <h1>This is a simple title</h1>
+                    <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
+                </section>`,
             },
             {
                 id: 'text',
@@ -32,6 +32,29 @@ const editor = grapesjs.init({
                 content: { type: 'image' },
                 activate: true,
             },
+            {
+                id: 'map',
+                label: 'Map',
+                select: true,
+                content: { type: 'map' },
+            },
+            {
+                id: 'video',
+                label: 'Video',
+                select: true,
+                content: { type: 'video' },
+                activate: true,
+            },
+            {
+                id: 'two-column',
+                label: 'Two columns',
+                content: "<div class='row'><div class='col-6'>Column 1</div><div class='col-6'>Column 2</div></div>",
+            },
+            {
+                id: 'three-column',
+                label: 'Three columns',
+                content: "<div class='row'><div class='col-4'>Column 1</div><div class='col-4'>Column 2</div><div class='col-4'>Column 3</div></div>",
+            }
         ],
     },
     selectorManager: {
@@ -88,16 +111,28 @@ const editor = grapesjs.init({
         devices: [
             {
                 name: 'Desktop',
-                width: '', // default size
+                width: '',
             },
             {
                 name: 'Mobile',
                 width: '320px', // this value will be used on canvas width
                 widthMedia: '480px', // this value will be used in CSS @media
             },
+            {
+              name: 'Tablet',
+              width: '768px',
+              widthMedia: '992px'
+            },
         ],
     },
-
+    canvas: {
+        styles: [
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
+        ],
+        scripts: [
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'
+        ]
+    }
 });
 
 editor.Panels.addPanel({
@@ -191,6 +226,12 @@ editor.Panels.addPanel({
             togglable: false,
         },
         {
+            id: 'device-tablet',
+            label: '<i class="fa fa-tablet-screen-button"></i>',
+            command: 'set-device-tablet',
+            togglable: false,
+        },
+        {
             id: 'device-mobile',
             label: '<i class="fa fa-mobile"></i>',
             command: 'set-device-mobile',
@@ -260,4 +301,7 @@ editor.Commands.add('set-device-desktop', {
 });
 editor.Commands.add('set-device-mobile', {
     run: (editor) => editor.setDevice('Mobile'),
+});
+editor.Commands.add('set-device-tablet', {
+    run: (editor) => editor.setDevice('Tablet'),
 });
