@@ -11,12 +11,31 @@
 
 .gjs-editor {
     box-shadow: var(--gjs-editor-box-shadow);
+    background:
+        radial-gradient(black 15%, transparent 16%) 0 0,
+        radial-gradient(black 15%, transparent 16%) 8px 8px,
+        radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+        radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+        background-color:#282828;
+        background-size:16px 16px;
 }
 
 .gjs-cv-canvas {
+    /*
+    --big-rect: 100px;
+    --small-rect: 20px;
+    */
+    --big-rect: 80px;
+    --small-rect: 16px;
     top: 0;
     width: 100%;
     height: 100%;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 2px, transparent 2px),
+    linear-gradient(rgba(255,255,255,.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.2) 1px, transparent 1px);
+    background-size: var(--big-rect) var(--big-rect), var(--big-rect) var(--big-rect), var(--small-rect) var(--small-rect), var(--small-rect) var(--small-rect);
+    background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 
 /* Blocks */

@@ -48,7 +48,7 @@ const editor = grapesjs.init({
             {
                 id: 'two-column',
                 label: 'Two columns',
-                content: "<div class='row'><div class='col-6'>Column 1</div><div class='col-6'>Column 2</div></div>",
+                content: "<div class='row'><div class='col-6'>Column 1</div><p class='col-6'>Column 2</p></div><style> .row { margin: 30px; } .col-6 { padding: 30px; } </style>",
             },
             {
                 id: 'three-column',
